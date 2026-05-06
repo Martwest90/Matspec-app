@@ -8,11 +8,21 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --green: #0F6E56;
-    --green-mid: #1D9E75;
-    --green-light: #E1F5EE;
-    --text: #1a1a1a;
-    --text-muted: #666;
+    --mood-dark: #2F2B2B;
+    --mood-body: #555555;
+    --mood-secondary: #777777;
+    --mood-decor: #BFBFBF;
+    --mood-accent1: #585FFF;
+    --mood-accent2: #2CC6D0;
+    --mood-accent3: #FEA528;
+    --mood-accent4: #00C17C;
+    --mood-accent5: #FF9C86;
+    --mood-bg: #F7F7F7;
+    --green: #585FFF;
+    --green-mid: #585FFF;
+    --green-light: #EEEEFF;
+    --text: #2F2B2B;
+    --text-muted: #777777;
     --border: #e0e0e0;
     --bg: #f7f7f5;
     --white: #ffffff;
@@ -43,7 +53,7 @@
 
   .logo-mark {
     width: 32px; height: 32px;
-    background: var(--green);
+    background: var(--mood-accent1);
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     color: white; font-weight: 700; font-size: 14px;
@@ -116,8 +126,8 @@
   }
   .ch-card:hover { border-color: #aaa; }
   .ch-card.active {
-    border-color: var(--green-mid);
-    background: var(--green-light);
+    border-color: var(--mood-accent1);
+    background: #EEEEFF;
   }
 
   .ch-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 7px; }
@@ -127,7 +137,7 @@
   .ch-check {
     position: absolute; top: 7px; right: 7px;
     width: 17px; height: 17px; border-radius: 50%;
-    background: var(--green-mid);
+    background: var(--mood-accent1);
     color: white; font-size: 10px;
     display: none; align-items: center; justify-content: center;
   }
@@ -167,7 +177,7 @@
     background: white; color: var(--text-muted);
     transition: all 0.1s;
   }
-  .type-btn.on { background: var(--green-mid); border-color: var(--green-mid); color: white; }
+  .type-btn.on { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
 
   .mini-row { display: flex; gap: 10px; flex-wrap: wrap; }
   .mini-field { flex: 1; min-width: 110px; }
@@ -176,13 +186,13 @@
 
   .gen-btn {
     width: 100%; padding: 13px;
-    background: var(--green); color: white;
+    background: var(--mood-accent1); color: white;
     border: none; border-radius: var(--radius-sm);
     font-size: 15px; font-weight: 600;
     cursor: pointer; transition: background 0.15s;
     margin-top: 4px;
   }
-  .gen-btn:hover { background: #085041; }
+  .gen-btn:hover { background: #3a41cc; }
   .gen-btn:disabled { background: #ccc; cursor: not-allowed; }
 
   /* ── PDF PREVIEW ─────────────────────────────────────── */
@@ -207,11 +217,11 @@
   .print-btn {
     display: flex; align-items: center; gap: 7px;
     padding: 7px 18px;
-    background: var(--green); color: white;
+    background: var(--mood-accent1); color: white;
     border: none; border-radius: var(--radius-sm);
     font-size: 13px; font-weight: 500; cursor: pointer;
   }
-  .print-btn:hover { background: #085041; }
+  .print-btn:hover { background: #3a41cc; }
 
   .pdf {
     padding: 36px 40px;
@@ -220,7 +230,7 @@
   }
 
   .pdf-header {
-    border-bottom: 2.5px solid var(--green);
+    border-bottom: 3px solid var(--mood-accent1);
     padding-bottom: 16px;
     margin-bottom: 26px;
     display: flex;
@@ -228,8 +238,8 @@
     align-items: flex-start;
   }
 
-  .pdf-title { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
-  .pdf-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+  .pdf-title { font-size: 22px; font-weight: 700; color: #2F2B2B; letter-spacing: -0.3px; }
+  .pdf-sub { font-size: 13px; color: #777777; margin-top: 2px; }
 
   .pdf-meta { text-align: right; }
   .pdf-meta-item { font-size: 12px; color: var(--text-muted); line-height: 1.9; }
@@ -237,9 +247,9 @@
 
   .deadline-badge {
     display: inline-block;
-    background: #FFF3CD;
-    color: #856404;
-    border: 1px solid #FFDA6A;
+    background: #FFF3E0;
+    color: #2F2B2B;
+    border: 1px solid #FEA528;
     border-radius: 4px;
     padding: 2px 9px;
     font-size: 12px;
@@ -278,38 +288,38 @@
 
   .spec-tbl { width: 100%; border-collapse: collapse; }
   .spec-tbl td { padding: 4px 0; vertical-align: top; font-size: 13px; }
-  .spec-tbl td:first-child { color: var(--text-muted); width: 42%; padding-right: 12px; }
-  .spec-tbl td:last-child { font-weight: 500; color: var(--text); }
+  .spec-tbl td:first-child { color: #777777; width: 42%; padding-right: 12px; }
+  .spec-tbl td:last-child { font-weight: 500; color: #2F2B2B; }
 
   .safezone-box {
-    background: #f0faf6;
-    border-left: 3px solid var(--green-mid);
+    background: #EEEEFF;
+    border-left: 3px solid var(--mood-accent1);
     padding: 8px 12px;
     border-radius: 0 4px 4px 0;
     font-size: 12px;
-    color: #2d6a55;
+    color: #3a3a7a;
     margin-top: 8px;
   }
-  .safezone-box a { color: var(--green); text-decoration: none; font-weight: 500; }
+  .safezone-box a { color: var(--mood-accent1); text-decoration: none; font-weight: 500; }
   .safezone-box a:hover { text-decoration: underline; }
 
   .open-box {
-    background: #fffbf0;
-    border: 1px solid #FFDA6A;
+    background: #FFF8EE;
+    border: 1px solid var(--mood-accent3);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
     margin-top: 24px;
   }
-  .open-box-title { font-size: 12px; font-weight: 700; color: #856404; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .open-item { font-size: 12px; color: #5a4a00; padding: 3px 0; display: flex; gap: 8px; }
-  .open-item::before { content: "→"; color: var(--green); flex-shrink: 0; }
+  .open-box-title { font-size: 12px; font-weight: 700; color: var(--mood-dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .open-item { font-size: 12px; color: var(--mood-body); padding: 3px 0; display: flex; gap: 8px; }
+  .open-item::before { content: "→"; color: var(--mood-accent1); flex-shrink: 0; }
 
   .pdf-footer {
     margin-top: 30px;
     padding-top: 12px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between;
-    font-size: 11px; color: #aaa;
+    border-top: 2px dotted #BFBFBF;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; color: #777777;
   }
 
   @media print {
@@ -760,6 +770,71 @@ const CHANNELS = [
     postetekst:null,
     leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
   },
+  {
+    id:'spotify-podcast', name:'Spotify Podcast', sub:'Lydspot / pre-roll & mid-roll', color:'#1DB954',
+    hasImage:false, hasVideo:false, hasAudio:true,
+    specs:{
+      audio:{
+        'Filformat':'MP3',
+        'Sample rate':'44.1 kHz',
+        'Bitrate':'Min 192 kbps',
+        'Kanaler':'Stereo',
+        'Lydnivaa':'-16 LUFS (+-1.5) · True Peak maks -2.0 dBTP',
+        'Varighet':'Maks 30 sek (pre-roll) · maks 60 sek (mid-roll)'
+      }
+    },
+    postetekst:null,
+    leveranse:'Via Spotify Ad Studio eller Direct IO',
+    specLink:'https://ads.spotify.com/en-US/ad-specs/podcast-ad-specs/'
+  },
+  {
+    id:'acast', name:'Acast', sub:'Lydspot - podcast', color:'#FF3D57',
+    hasImage:false, hasVideo:false, hasAudio:true,
+    specs:{
+      audio:{
+        'Filformat':'MP3 (kun MP3)',
+        'Bitrate':'128-160 kbps anbefalt (CBR)',
+        'Lydnivaa':'Normaliseres til -18 LUFS av Acast',
+        'Merknad':'Darlig lydkvalitet kan fore til avvisning'
+      }
+    },
+    postetekst:null,
+    leveranse:'Via Acast Marketplace eller kontakt Acast-salg',
+    specLink:'https://learn.acast.com/en/articles/6515297-audio-file-specs'
+  },
+  {
+    id:'kino-mdn', name:'Kino - MDN', sub:'Media Direct Norge / Nordisk Film Kino', color:'#E50914',
+    hasImage:false, hasVideo:true,
+    specs:{
+      video:{
+        'Filformat':'MOV, MP4, WMV, MPEG',
+        'Bildeformat':'16:9 (1920x1080 px anbefalt)',
+        'Bitrate video':'Min 20 Mbps',
+        'Lyd':'5.1 surround (anbefalt) eller 2.0 stereo',
+        'Lydnivaa':'Mikses til LEQ78 - IKKE hard limited lyd',
+        'Merknad':'Kino krever dynamisk lyd - ikke komprimert som for TV'
+      }
+    },
+    postetekst:null,
+    leveranse:'distribusjon@mdn.no · Frist: 3 virkedager for forste visningsdag',
+    specLink:'https://www.mdn.no/produksjonslink'
+  },
+  {
+    id:'linear-tv', name:'Lineaer TV', sub:'TV2, TVNorge, Discovery, WBD, Viasat m.fl.', color:'#1a1a2e',
+    hasImage:false, hasVideo:true,
+    specs:{
+      video:{
+        'Filformat':'HD (1920x1080) via Peach eller Extremereach',
+        'Lydnivaa':'-23 LUFS (R128 EBU-standard)',
+        'Nielsen-kode':'Pakrevd - bestilles pa filmkode.no',
+        'Leveringsplattform':'Peach (peach.me) eller Extremereach',
+        'Merknad':'Adtoox og IMDcloud er na slatt sammen til Peach'
+      }
+    },
+    postetekst:null,
+    leveranse:'Via Peach eller Extremereach · Frist: 4 virkedager for forste visning · Nielsen-kode: filmkode.no',
+    specLink:'https://annonsere.tv2.no/tv/reklamefilm'
+  },
 ];
 
 let sel = {};
@@ -771,7 +846,8 @@ function toggleCh(id) {
     delete sel[id];
   } else {
     const ch = CHANNELS.find(c=>c.id===id);
-    sel[id] = { types: ch.hasVideo ? ['video'] : ['image'], count:'', ordernr:'', notes:'' };
+    const defaultType = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
+    sel[id] = { types: defaultType, count:'', ordernr:'', duration:'', notes:'' };
   }
   renderGrid();
   renderConfigAndBtn();
@@ -826,7 +902,8 @@ function renderConfigAndBtn() {
           </div>
         </div>`:''}
         <div class="mini-row">
-          <div class="mini-field"><label>Antall kreativer</label><input value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>
+          ${!ch.hasAudio?`<div class="mini-field"><label>Antall kreativer</label><input value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>`:''}
+          ${(ch.hasVideo||ch.hasAudio)?`<div class="mini-field"><label>Varighet</label><input value="${cfg.duration||''}" placeholder="f.eks. 15 sek / 6+15 sek" oninput="setCf('${id}','duration',this.value)"></div>`:''}
           ${ch.isBauer?`<div class="mini-field"><label>Ordrenummer</label><input value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordernr',this.value)"></div>`:''}
           <div class="mini-field" style="flex:2"><label>Merknad</label><input value="${cfg.notes}" placeholder="Særlige krav, varianter..." oninput="setCf('${id}','notes',this.value)"></div>
         </div>
@@ -869,10 +946,11 @@ function buildPDF() {
     const cfg = sel[id];
     let sections = '';
 
-    cfg.types.forEach(t=>{
+    const allTypes = cfg.types.length ? cfg.types : (ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image']);
+    allTypes.forEach(t=>{
       const specs = ch.specs[t];
       if (!specs) return;
-      const label = t==='image' ? 'Bilde' : 'Film / Video';
+      const label = t==='image' ? 'Bilde' : t==='audio' ? 'Lyd / Audio' : 'Film / Video';
       sections += `
         <div class="spec-group">
           <div class="spec-group-title">${label}</div>
@@ -905,9 +983,10 @@ function buildPDF() {
         <div class="spec-group-title">Leveranse</div>
         <table class="spec-tbl">
           <tr><td>Leveres til</td><td>${leveranseVal}</td></tr>
-          ${deadline?`<tr><td>Kampanjedeadline</td><td style="color:#0F6E56;font-weight:700">${deadline}</td></tr>`:''}
+          ${cfg.duration?`<tr><td>Varighet</td><td style="font-weight:500">${cfg.duration}</td></tr>`:''}
+          ${deadline?`<tr><td>Kampanjedeadline</td><td style="color:#FEA528;font-weight:700">${deadline}</td></tr>`:''}
           ${cfg.notes?`<tr><td>Merknad</td><td>${cfg.notes}</td></tr>`:''}
-          ${ch.specLink?`<tr><td>Offisiell spec</td><td><a href="${ch.specLink}" target="_blank" style="color:#0F6E56">${ch.specLink}</a></td></tr>`:''}
+          ${ch.specLink?`<tr><td>Offisiell spec</td><td><a href="${ch.specLink}" target="_blank" style="color:#585FFF">${ch.specLink}</a></td></tr>`:''}
         </table>
       </div>`;
 
@@ -950,8 +1029,8 @@ function buildPDF() {
       </div>`:''}
 
       <div class="pdf-footer">
-        <span>Moodgruppen AS · Materiellspesifikasjon</span>
-        <span>Safezones hentet fra offisielle plattformkilder · ${now()}</span>
+        <span style="font-weight:600;color:#585FFF;letter-spacing:0.04em">MOODGRUPPEN</span>
+        <span>Materiellspesifikasjon · Safezones fra offisielle kilder · ${now()}</span>
       </div>
     </div>`;
 }
