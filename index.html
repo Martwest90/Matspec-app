@@ -5,341 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Materiellspesifikasjon – Moodgruppen</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --mood-dark: #2F2B2B; --mood-body: #555555; --mood-secondary: #777777;
+  --mood-decor: #BFBFBF; --mood-accent1: #585FFF; --mood-accent2: #2CC6D0;
+  --mood-accent3: #FEA528; --mood-accent4: #00C17C; --mood-bg: #F7F7F7;
+  --border: #e0e0e0; --white: #ffffff; --radius: 10px; --radius-sm: 6px;
+}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7f5; color: var(--mood-dark); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+header { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
+.logo-mark { width: 32px; height: 32px; background: var(--mood-accent1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
+.header-title { font-size: 15px; font-weight: 600; }
+.header-sub { font-size: 12px; color: var(--mood-secondary); margin-left: auto; }
+.main { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
+.section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mood-secondary); margin-bottom: 10px; }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+label { display: block; font-size: 12px; color: var(--mood-secondary); margin-bottom: 5px; font-weight: 500; }
+input { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; background: var(--white); color: var(--mood-dark); outline: none; transition: border-color 0.15s; }
+input:focus { border-color: var(--mood-accent1); }
 
-  :root {
-    --mood-dark: #2F2B2B;
-    --mood-body: #555555;
-    --mood-secondary: #777777;
-    --mood-decor: #BFBFBF;
-    --mood-accent1: #585FFF;
-    --mood-accent2: #2CC6D0;
-    --mood-accent3: #FEA528;
-    --mood-accent4: #00C17C;
-    --mood-accent5: #FF9C86;
-    --mood-bg: #F7F7F7;
-    --green: #585FFF;
-    --green-mid: #585FFF;
-    --green-light: #EEEEFF;
-    --text: #2F2B2B;
-    --text-muted: #777777;
-    --border: #e0e0e0;
-    --bg: #f7f7f5;
-    --white: #ffffff;
-    --radius: 10px;
-    --radius-sm: 6px;
-  }
+/* ── KANALTRE ─── */
+.tree-category { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.tree-cat-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--mood-bg); cursor: pointer; user-select: none; font-weight: 600; font-size: 13px; }
+.tree-cat-header:hover { background: #eeeeff; }
+.tree-cat-icon { font-size: 16px; }
+.tree-cat-arrow { margin-left: auto; font-size: 11px; color: var(--mood-secondary); transition: transform 0.2s; }
+.tree-cat-arrow.open { transform: rotate(90deg); }
+.tree-level2 { border-top: 1px solid var(--border); display: none; }
+.tree-level2.open { display: block; }
+.tree-sub-header { display: flex; align-items: center; gap: 8px; padding: 9px 14px 9px 28px; cursor: pointer; font-size: 13px; font-weight: 500; background: var(--white); border-bottom: 1px solid #f0f0f0; user-select: none; }
+.tree-sub-header:hover { background: #f9f9ff; }
+.tree-sub-arrow { margin-left: auto; font-size: 10px; color: var(--mood-secondary); transition: transform 0.2s; }
+.tree-sub-arrow.open { transform: rotate(90deg); }
+.tree-formats { display: none; border-top: 1px solid #f0f0f0; }
+.tree-formats.open { display: block; }
+.format-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 44px; border-bottom: 1px solid #f8f8f8; cursor: pointer; user-select: none; }
+.format-row:hover { background: #f5f5ff; }
+.format-row:last-child { border-bottom: none; }
+.format-checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; }
+.format-checkbox.checked { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; font-size: 10px; }
+.format-name { font-size: 13px; color: var(--mood-dark); }
+.format-sub { font-size: 11px; color: var(--mood-secondary); margin-left: auto; }
+.format-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
+/* ── SELECTED CONFIGS ─── */
+.config-block { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; }
+.config-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--mood-bg); border-bottom: 1px solid var(--border); }
+.config-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.remove-btn { font-size: 11px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: white; color: var(--mood-secondary); }
+.remove-btn:hover { border-color: #E24B4A; color: #E24B4A; }
+.config-body { padding: 12px 14px; }
+.type-toggles { display: flex; gap: 7px; margin-bottom: 10px; }
+.type-btn { font-size: 12px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; background: white; color: var(--mood-secondary); transition: all 0.1s; }
+.type-btn.on { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
+.mini-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.mini-field { flex: 1; min-width: 110px; }
+.mini-field label { font-size: 11px; }
+.mini-field input { padding: 5px 9px; font-size: 13px; }
 
-  header {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 32px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+/* ── SEKUNDLENGDER ─── */
+.duration-section { margin-top: 10px; }
+.duration-label { font-size: 11px; color: var(--mood-secondary); font-weight: 500; margin-bottom: 7px; }
+.duration-pills { display: flex; gap: 7px; flex-wrap: wrap; }
+.dur-pill { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--mood-secondary); transition: all 0.12s; flex-direction: column; gap: 1px; }
+.dur-pill:hover { border-color: var(--mood-accent1); color: var(--mood-accent1); }
+.dur-pill.selected { border-color: var(--mood-accent1); background: var(--mood-accent1); color: white; }
+.dur-pill .dur-num { font-size: 14px; font-weight: 700; line-height: 1; }
+.dur-pill .dur-unit { font-size: 9px; font-weight: 400; opacity: 0.8; }
+.dur-custom { margin-top: 8px; }
+.dur-custom input { width: 180px; font-size: 12px; padding: 5px 9px; }
 
-  .logo-mark {
-    width: 32px; height: 32px;
-    background: var(--mood-accent1);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-weight: 700; font-size: 14px;
-    letter-spacing: -0.5px;
-  }
+/* ── KNAPPER ─── */
+.gen-btn { width: 100%; padding: 13px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-top: 4px; }
+.gen-btn:hover { background: #3a41cc; }
+.gen-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-  .header-title { font-size: 15px; font-weight: 600; color: var(--text); }
-  .header-sub { font-size: 12px; color: var(--text-muted); margin-left: auto; }
+/* ── PDF PREVIEW ─── */
+.preview-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 20px; }
+.preview-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: var(--mood-bg); border-bottom: 1px solid var(--border); }
+.preview-label { font-size: 12px; color: var(--mood-secondary); font-weight: 500; }
+.print-btn { display: flex; align-items: center; gap: 7px; padding: 7px 18px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; }
+.print-btn:hover { background: #3a41cc; }
+.pdf { padding: 36px 40px; font-size: 13px; line-height: 1.65; }
+.pdf-header { border-bottom: 3px solid var(--mood-accent1); padding-bottom: 16px; margin-bottom: 26px; display: flex; justify-content: space-between; align-items: flex-start; }
+.pdf-title { font-size: 22px; font-weight: 700; color: #2F2B2B; letter-spacing: -0.3px; }
+.pdf-sub { font-size: 13px; color: #777777; margin-top: 2px; }
+.deadline-badge { display: inline-block; background: #FFF3E0; color: #2F2B2B; border: 1px solid #FEA528; border-radius: 4px; padding: 2px 9px; font-size: 12px; font-weight: 600; margin-top: 4px; }
+.pdf-meta { text-align: right; }
+.pdf-meta-item { font-size: 12px; color: #777777; line-height: 1.9; }
+.pdf-meta-item strong { color: #2F2B2B; }
+.ch-block { margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+.ch-block-head { padding: 10px 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--border); }
+.ch-block-sub { font-size: 12px; color: var(--mood-secondary); font-weight: 400; }
+.ch-block-body { padding: 16px 18px; }
+.spec-group { margin-bottom: 18px; }
+.spec-group:last-child { margin-bottom: 0; }
+.spec-group-title { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mood-secondary); margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+.spec-tbl { width: 100%; border-collapse: collapse; }
+.spec-tbl td { padding: 4px 0; vertical-align: top; font-size: 13px; }
+.spec-tbl td:first-child { color: #777777; width: 42%; padding-right: 12px; }
+.spec-tbl td:last-child { font-weight: 500; color: #2F2B2B; }
+.safezone-box { background: #EEEEFF; border-left: 3px solid var(--mood-accent1); padding: 8px 12px; border-radius: 0 4px 4px 0; font-size: 12px; color: #3a3a7a; margin-top: 8px; }
+.safezone-box a { color: var(--mood-accent1); text-decoration: none; font-weight: 500; }
+.duration-badge { display: inline-flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.dur-badge-item { background: var(--mood-accent1); color: white; border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+.open-box { background: #FFF8EE; border: 1px solid var(--mood-accent3); border-radius: var(--radius-sm); padding: 14px 16px; margin-top: 24px; }
+.open-box-title { font-size: 12px; font-weight: 700; color: var(--mood-dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
+.open-item { font-size: 12px; color: var(--mood-body); padding: 3px 0; display: flex; gap: 8px; }
+.open-item::before { content: "→"; color: var(--mood-accent1); flex-shrink: 0; }
+.pdf-footer { margin-top: 30px; padding-top: 12px; border-top: 2px dotted #BFBFBF; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #777777; }
 
-  .main { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
+/* ── BREADCRUMB ─── */
+.breadcrumb { font-size: 11px; color: var(--mood-secondary); margin-bottom: 6px; }
+.breadcrumb span { color: var(--mood-accent1); }
 
-  .section-label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-  }
-
-  .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-
-  label {
-    display: block;
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-
-  input, select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: inherit;
-    background: var(--white);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-  input:focus, select:focus { border-color: var(--green-mid); }
-
-  .channel-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
-    gap: 10px;
-    margin-bottom: 4px;
-  }
-
-  .ch-card {
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    cursor: pointer;
-    transition: all 0.12s;
-    background: var(--white);
-    position: relative;
-    user-select: none;
-  }
-  .ch-card:hover { border-color: #aaa; }
-  .ch-card.active {
-    border-color: var(--mood-accent1);
-    background: #EEEEFF;
-  }
-
-  .ch-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 7px; }
-  .ch-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; }
-  .ch-sub { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-
-  .ch-check {
-    position: absolute; top: 7px; right: 7px;
-    width: 17px; height: 17px; border-radius: 50%;
-    background: var(--mood-accent1);
-    color: white; font-size: 10px;
-    display: none; align-items: center; justify-content: center;
-  }
-  .ch-card.active .ch-check { display: flex; }
-
-  .config-block {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    margin-bottom: 10px;
-  }
-
-  .config-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 14px;
-    background: #fafafa;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .config-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-
-  .remove-btn {
-    font-size: 11px; padding: 3px 9px;
-    border: 1px solid var(--border);
-    border-radius: 4px; cursor: pointer;
-    background: white; color: var(--text-muted);
-  }
-  .remove-btn:hover { border-color: #E24B4A; color: #E24B4A; }
-
-  .config-body { padding: 12px 14px; }
-
-  .type-toggles { display: flex; gap: 7px; margin-bottom: 10px; }
-  .type-btn {
-    font-size: 12px; padding: 4px 12px;
-    border: 1px solid var(--border);
-    border-radius: 20px; cursor: pointer;
-    background: white; color: var(--text-muted);
-    transition: all 0.1s;
-  }
-  .type-btn.on { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
-
-  .mini-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .mini-field { flex: 1; min-width: 110px; }
-  .mini-field label { font-size: 11px; }
-  .mini-field input { padding: 5px 9px; font-size: 13px; }
-
-  .gen-btn {
-    width: 100%; padding: 13px;
-    background: var(--mood-accent1); color: white;
-    border: none; border-radius: var(--radius-sm);
-    font-size: 15px; font-weight: 600;
-    cursor: pointer; transition: background 0.15s;
-    margin-top: 4px;
-  }
-  .gen-btn:hover { background: #3a41cc; }
-  .gen-btn:disabled { background: #ccc; cursor: not-allowed; }
-
-  /* ── PDF PREVIEW ─────────────────────────────────────── */
-
-  .preview-wrap {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-top: 20px;
-  }
-
-  .preview-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 10px 18px;
-    background: #f0f0ec;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .preview-label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-
-  .print-btn {
-    display: flex; align-items: center; gap: 7px;
-    padding: 7px 18px;
-    background: var(--mood-accent1); color: white;
-    border: none; border-radius: var(--radius-sm);
-    font-size: 13px; font-weight: 500; cursor: pointer;
-  }
-  .print-btn:hover { background: #3a41cc; }
-
-  .pdf {
-    padding: 36px 40px;
-    font-size: 13px;
-    line-height: 1.65;
-  }
-
-  .pdf-header {
-    border-bottom: 3px solid var(--mood-accent1);
-    padding-bottom: 16px;
-    margin-bottom: 26px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .pdf-title { font-size: 22px; font-weight: 700; color: #2F2B2B; letter-spacing: -0.3px; }
-  .pdf-sub { font-size: 13px; color: #777777; margin-top: 2px; }
-
-  .pdf-meta { text-align: right; }
-  .pdf-meta-item { font-size: 12px; color: var(--text-muted); line-height: 1.9; }
-  .pdf-meta-item strong { color: var(--text); }
-
-  .deadline-badge {
-    display: inline-block;
-    background: #FFF3E0;
-    color: #2F2B2B;
-    border: 1px solid #FEA528;
-    border-radius: 4px;
-    padding: 2px 9px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-top: 4px;
-  }
-
-  .ch-block {
-    margin-bottom: 24px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-  }
-
-  .ch-block-head {
-    padding: 10px 16px;
-    display: flex; align-items: center; gap: 10px;
-    font-size: 14px; font-weight: 600;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .ch-block-sub { font-size: 12px; color: var(--text-muted); font-weight: 400; }
-  .ch-block-body { padding: 16px 18px; }
-
-  .spec-group { margin-bottom: 18px; }
-  .spec-group:last-child { margin-bottom: 0; }
-
-  .spec-group-title {
-    font-size: 10px; font-weight: 700;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .spec-tbl { width: 100%; border-collapse: collapse; }
-  .spec-tbl td { padding: 4px 0; vertical-align: top; font-size: 13px; }
-  .spec-tbl td:first-child { color: #777777; width: 42%; padding-right: 12px; }
-  .spec-tbl td:last-child { font-weight: 500; color: #2F2B2B; }
-
-  .safezone-box {
-    background: #EEEEFF;
-    border-left: 3px solid var(--mood-accent1);
-    padding: 8px 12px;
-    border-radius: 0 4px 4px 0;
-    font-size: 12px;
-    color: #3a3a7a;
-    margin-top: 8px;
-  }
-  .safezone-box a { color: var(--mood-accent1); text-decoration: none; font-weight: 500; }
-  .safezone-box a:hover { text-decoration: underline; }
-
-  .open-box {
-    background: #FFF8EE;
-    border: 1px solid var(--mood-accent3);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    margin-top: 24px;
-  }
-  .open-box-title { font-size: 12px; font-weight: 700; color: var(--mood-dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .open-item { font-size: 12px; color: var(--mood-body); padding: 3px 0; display: flex; gap: 8px; }
-  .open-item::before { content: "→"; color: var(--mood-accent1); flex-shrink: 0; }
-
-  .pdf-footer {
-    margin-top: 30px;
-    padding-top: 12px;
-    border-top: 2px dotted #BFBFBF;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 11px; color: #777777;
-  }
-
-  @media print {
-    body { background: white; }
-    header, .preview-bar, .main > *:not(.preview-wrap) { display: none !important; }
-    .preview-wrap { border: none; margin: 0; }
-    .pdf { padding: 20px; }
-    .ch-block { break-inside: avoid; }
-  }
+@media print {
+  body { background: white; }
+  header, .preview-bar, .main > *:not(.preview-wrap) { display: none !important; }
+  .preview-wrap { border: none; margin: 0; }
+  .pdf { padding: 20px; }
+  .ch-block { break-inside: avoid; }
+}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo-mark">M</div>
   <span class="header-title">Materiellspesifikasjon</span>
   <span class="header-sub">Moodgruppen</span>
 </header>
-
 <div class="main">
+
+  <!-- Kampanjeinfo -->
   <div class="card">
     <div class="section-label">Kampanjeinformasjon</div>
     <div class="grid-2" style="margin-bottom:12px">
@@ -353,503 +152,347 @@
     </div>
   </div>
 
+  <!-- Kanaltree -->
   <div class="card">
-    <div class="section-label">Velg kanaler</div>
-    <div class="channel-grid" id="ch-grid"></div>
+    <div class="section-label">Velg kanaler og formater</div>
+    <div id="tree"></div>
   </div>
 
+  <!-- Config -->
   <div class="card" id="config-card" style="display:none">
-    <div class="section-label">Konfigurer valgte kanaler</div>
+    <div class="section-label">Konfigurer valgte formater</div>
     <div id="config-list"></div>
   </div>
 
   <button class="gen-btn" id="gen-btn" disabled onclick="generate()">Generer materiellspesifikasjon</button>
-
   <div id="preview-area"></div>
 </div>
 
 <script>
-const CHANNELS = [
-  {
-    id:'meta', name:'Meta', sub:'Facebook & Instagram', color:'#1877F2',
-    hasImage:true, hasVideo:true,
-    specs:{
-      image:{
-        'Format – Feed':'4:5 (1080×1350 px)',
-        'Format – Stories/Reels':'9:16 (1080×1920 px)',
-        'Filformat':'JPG eller PNG',
-        'Maks filstørrelse':'30 MB',
-        'Fargemodus':'sRGB'
-      },
-      video:{
-        'Format':'4:5 (1080×1350 px) og 9:16 (1080×1920 px)',
-        'Filformat':'MP4 eller MOV',
-        'Maks filstørrelse':'4 GB',
-        'Varighet':'15 sek anbefalt – maks 60 sek (Reels)',
-        'Codec':'H.264, progressiv scan, fast frame rate',
-        'Lyd':'Stereo AAC, min 128 kbps'
-      }
-    },
-    safezones:{
-      image:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.',
-      video:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.',
-      link:'https://www.facebook.com/business/help/1593651214426085',
-      label:'Meta safezone-guide'
-    },
-    postetekst:{
-      'Primærtekst (feed)':'Maks 125 tegn anbefalt (kan trunkeres)',
-      'Overskrift':'Maks 40 tegn',
-      'Beskrivelse':'Maks 30 tegn'
-    },
+// ─── KANALDATA ──────────────────────────────────────────────────────────────
+const CHANNELS = {
+  'meta-bilde': {
+    name:'Meta – Bilde', color:'#1877F2', cat:'some', sub:'meta',
+    hasImage:true, hasVideo:false,
+    specs:{ image:{
+      'Format – Feed':'4:5 (1080×1350 px)',
+      'Format – Stories/Reels':'9:16 (1080×1920 px)',
+      'Filformat':'JPG eller PNG', 'Maks filstørrelse':'30 MB', 'Fargemodus':'sRGB'
+    }},
+    safezones:{ image:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
+    postetekst:{ 'Primærtekst (feed)':'Maks 125 tegn anbefalt', 'Overskrift':'Maks 40 tegn', 'Beskrivelse':'Maks 30 tegn' },
     leveranse:'Opplastes i Meta Ads Manager av Moodgruppen'
   },
-  {
-    id:'tiktok', name:'TikTok', sub:'In-Feed Ads', color:'#010101',
+  'meta-video': {
+    name:'Meta – Video', color:'#1877F2', cat:'some', sub:'meta',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format':'9:16 – 1080×1920 px',
-        'Filformat':'.mp4 eller .mov',
-        'Maks filstørrelse':'500 MB',
-        'Varighet':'15–30 sek anbefalt (maks 60 sek)',
-        'Min oppløsning':'540×960 px',
-        'Bitrate':'Min 516 kbps'
-      }
-    },
-    safezones:{
-      video:'Topp: 108 px · Bunn: 320 px · Venstre: 60 px · Høyre: 120 px – fri for logo, tekst og CTA.',
-      link:'https://ads.tiktok.com/help/article?aid=10002742',
-      label:'TikTok Ads Manager spec-side'
-    },
-    postetekst:{
-      'Caption':'Maks 4 linjer vises. Kortere = større safezone. Anbefalt: 1 linje.',
-      'Merknad':'Ingen @-omtaler, hashtags eller lenker i Non-Spark ads'
-    },
+    durations:[6,15,20,30],
+    specs:{ video:{
+      'Format':'4:5 (1080×1350 px) og 9:16 (1080×1920 px)',
+      'Filformat':'MP4 eller MOV', 'Maks filstørrelse':'4 GB',
+      'Codec':'H.264, progressiv scan', 'Lyd':'Stereo AAC, min 128 kbps'
+    }},
+    safezones:{ video:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
+    postetekst:{ 'Primærtekst (feed)':'Maks 125 tegn anbefalt', 'Overskrift':'Maks 40 tegn' },
+    leveranse:'Opplastes i Meta Ads Manager av Moodgruppen'
+  },
+  'tiktok': {
+    name:'TikTok', color:'#010101', cat:'some', sub:'tiktok',
+    hasImage:false, hasVideo:true,
+    durations:[6,9,15,30,60],
+    specs:{ video:{
+      'Format':'9:16 – 1080×1920 px', 'Filformat':'.mp4 eller .mov',
+      'Maks filstørrelse':'500 MB', 'Min oppløsning':'540×960 px', 'Bitrate':'Min 516 kbps'
+    }},
+    safezones:{ video:'Topp: 108 px · Bunn: 320 px · Venstre: 60 px · Høyre: 120 px', link:'https://ads.tiktok.com/help/article?aid=10002742', label:'TikTok Ads Manager' },
+    postetekst:{ 'Caption':'Maks 4 linjer. Anbefalt: 1 linje.', 'Merknad':'Ingen @-omtaler eller hashtags i Non-Spark ads' },
     leveranse:'Opplastes i TikTok Ads Manager av Moodgruppen'
   },
-  {
-    id:'snapchat', name:'Snapchat', sub:'Single Image & Video', color:'#FFCD00',
-    hasImage:true, hasVideo:true,
-    specs:{
-      image:{
-        'Format':'9:16 (1080×1920 px)',
-        'Filformat':'JPG eller PNG',
-        'Maks filstørrelse':'5 MB'
-      },
-      video:{
-        'Format':'9:16 (1080×1920 px)',
-        'Filformat':'MP4 eller MOV (H.264)',
-        'Maks filstørrelse':'1 GB',
-        'Varighet':'3–180 sek (anbefalt maks 15 sek)',
-        'Lyd':'AAC-LC, maks 192 kbps'
-      }
-    },
-    safezones:{
-      image:'Topp 180 px og bunn 180 px fri for tekst og logo (UI-overlays og swipe-up).',
-      video:'Topp 180 px og bunn 180 px fri for tekst og logo (UI-overlays og swipe-up).',
-      link:'https://businesshelp.snapchat.com/s/topic/ad-specifications',
-      label:'Snapchat Business Help – ad specs'
-    },
-    postetekst:{
-      'Brand name':'Maks 25 tegn',
-      'Headline':'Maks 34 tegn'
-    },
+  'snapchat-bilde': {
+    name:'Snapchat – Bilde', color:'#FFCD00', cat:'some', sub:'snapchat',
+    hasImage:true, hasVideo:false,
+    specs:{ image:{ 'Format':'9:16 (1080×1920 px)', 'Filformat':'JPG eller PNG', 'Maks filstørrelse':'5 MB' }},
+    safezones:{ image:'Topp 180 px og bunn 180 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
+    postetekst:{ 'Brand name':'Maks 25 tegn', 'Headline':'Maks 34 tegn' },
     leveranse:'Opplastes i Snapchat Ads Manager av Moodgruppen'
   },
-  {
-    id:'youtube', name:'YouTube', sub:'In-stream + Shorts', color:'#FF0000',
+  'snapchat-video': {
+    name:'Snapchat – Video', color:'#FFCD00', cat:'some', sub:'snapchat',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format – In-stream':'16:9 (1920×1080 px)',
-        'Format – Shorts':'9:16 (1080×1920 px)',
-        'Filformat':'.mp4, .mov, .avi, .mpeg, .webm, .wmv',
-        'Maks filstørrelse':'1 GB',
-        'Varighet':'6 sek (bumper) / 15 sek (skippable pre-roll)',
-        'Lyd':'PCM (anbefalt) eller AAC, 16 eller 24 bit'
-      }
-    },
-    safezones:{
-      video:'Unngå viktige elementer i nedre 10% av bildet (skip-knapp og YouTube-logooverlay).',
-      link:'https://support.google.com/youtube/answer/1722171',
-      label:'YouTube Help Center – videospesifikasjoner'
-    },
-    postetekst:{
-      'Videotittel':'Maks 100 tegn',
-      'Beskrivelse':'Maks 5000 tegn'
-    },
+    durations:[3,6,10,15],
+    specs:{ video:{ 'Format':'9:16 (1080×1920 px)', 'Filformat':'MP4 eller MOV (H.264)', 'Maks filstørrelse':'1 GB', 'Lyd':'AAC-LC, maks 192 kbps' }},
+    safezones:{ video:'Topp 180 px og bunn 180 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
+    postetekst:{ 'Brand name':'Maks 25 tegn', 'Headline':'Maks 34 tegn' },
+    leveranse:'Opplastes i Snapchat Ads Manager av Moodgruppen'
+  },
+  'youtube': {
+    name:'YouTube', color:'#FF0000', cat:'some', sub:'youtube',
+    hasImage:false, hasVideo:true,
+    durations:[6,15,20,30],
+    specs:{ video:{
+      'Format – In-stream':'16:9 (1920×1080 px)', 'Format – Shorts':'9:16 (1080×1920 px)',
+      'Filformat':'.mp4, .mov, .avi, .mpeg, .webm, .wmv', 'Maks filstørrelse':'1 GB',
+      'Lyd':'PCM (anbefalt) eller AAC, 16 eller 24 bit'
+    }},
+    safezones:{ video:'Unngå viktige elementer i nedre 10% (skip-knapp og logooverlay).', link:'https://support.google.com/youtube/answer/1722171', label:'YouTube Help Center' },
+    postetekst:{ 'Videotittel':'Maks 100 tegn', 'Beskrivelse':'Maks 5000 tegn' },
     leveranse:'Via Google Ads, administreres av Moodgruppen'
   },
-  {
-    id:'vgtv', name:'VGTV', sub:'Pre-roll, nonskip', color:'#E2001A',
+  'vgtv': {
+    name:'VGTV', color:'#E2001A', cat:'onlinevideo', sub:'vgtv',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)',
-        'Filformat':'.mp4',
-        'Maks filstørrelse':'50 MB',
-        'Varighet':'10–15 sek',
-        'Videokodek':'H.264 (eller DVCPRO HD)',
-        'Oppløsning':'Anbefalt 1080p – min 640×360 px',
-        'FPS':'Anbefalt 50 fps · min 25 fps progressiv / 50 fps interlaced · maks 60 fps',
-        'Bitrate video':'Min 5 000 kbps',
-        'Lydformat':'Stereo AAC eller MP3',
-        'Lydnivå':'–23 LUFS/LKFS (±7) · maks –16 LUFS · min –30 LUFS',
-        'Bitrate lyd':'Min 128 kbps',
-        'Leveringsformat':'VAST-tag · VPAID må fjernes fra VAST-tag'
-      }
-    },
-    postetekst:null,
-    leveranse:'VAST-tag leveres til Moodgruppen'
+    durations:[10,15,20,30],
+    specs:{ video:{
+      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)', 'Filformat':'.mp4',
+      'Maks filstørrelse':'50 MB', 'Videokodek':'H.264 (eller DVCPRO HD)',
+      'Oppløsning':'Anbefalt 1080p – min 640×360 px',
+      'FPS':'Anbefalt 50 fps · min 25 fps progressiv · maks 60 fps',
+      'Bitrate video':'Min 5 000 kbps', 'Lydformat':'Stereo AAC eller MP3',
+      'Lydnivå':'–23 LUFS/LKFS (±7) · maks –16 LUFS · min –30 LUFS',
+      'Bitrate lyd':'Min 128 kbps', 'Leveringsformat':'VAST-tag · VPAID må fjernes'
+    }},
+    postetekst:null, leveranse:'VAST-tag leveres til Moodgruppen'
   },
-  {
-    id:'tv2play', name:'TV2 Play', sub:'Pre/mid-roll, nonskip', color:'#D40000',
+  'tv2play': {
+    name:'TV2 Play', color:'#D40000', cat:'onlinevideo', sub:'tv2play',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format':'16:9',
-        'Varighet':'10–15 sek',
-        'Plassering':'Pre-roll og mid-roll, nonskip',
-        'Leveringsmetode':'Via Adtoox / Adstream / Peach'
-      }
-    },
-    postetekst:null,
-    leveranse:'Leveres via Adtoox / Adstream / Peach til TV2 Play og Discovery+'
+    durations:[10,15,20,30],
+    specs:{ video:{ 'Format':'16:9', 'Plassering':'Pre-roll og mid-roll, nonskip', 'Leveringsmetode':'Via Adtoox / Adstream / Peach' }},
+    postetekst:null, leveranse:'Leveres via Adtoox / Adstream / Peach til TV2 Play og Discovery+'
   },
-  {
-    id:'allertv', name:'Aller TV', sub:'Pre-roll, nonskip', color:'#1A1A2E',
+  'allertv': {
+    name:'Aller TV', color:'#1A1A2E', cat:'onlinevideo', sub:'allertv',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format':'16:9 og 9:16',
-        'Filformat':'.mp4',
-        'Maks filstørrelse':'512 MB',
-        'Varighet':'10–15 sek',
-        'Kvalitet':'1080p eller 720p',
-        'Min oppløsning':'980×551 px',
-        'Videokodek':'H.264, min 1000 kbit/s',
-        'Lydnivå':'–23 LUFS/LKFS ±1'
-      }
-    },
-    postetekst:null,
-    leveranse:'Leveres til Moodgruppen'
+    durations:[10,15,20,30],
+    specs:{ video:{
+      'Format':'16:9 og 9:16', 'Filformat':'.mp4', 'Maks filstørrelse':'512 MB',
+      'Kvalitet':'1080p eller 720p', 'Min oppløsning':'980×551 px',
+      'Videokodek':'H.264, min 1000 kbit/s', 'Lydnivå':'–23 LUFS/LKFS ±1'
+    }},
+    postetekst:null, leveranse:'Leveres til Moodgruppen'
   },
-  {
-    id:'azerion', name:'Azerion Gaming', sub:'Pre-roll, nonskip', color:'#6B2FA0',
+  'azerion': {
+    name:'Azerion Gaming', color:'#6B2FA0', cat:'onlinevideo', sub:'azerion',
     hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)',
-        'Filformat':'.mp4',
-        'Maks filstørrelse':'200 MB',
-        'Varighet':'Maks 30 sek (anbefalt 10–15 sek)',
-        'Leveringsformat':'VAST 2.0 eller VAST 3.0 tag',
-        'Alternativt':'Videofil + click URL + (valgfri) impressiontracker'
-      }
-    },
-    postetekst:null,
-    leveranse:'VAST-tag eller videofil leveres til Moodgruppen'
+    durations:[10,15,20,30],
+    specs:{ video:{
+      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)', 'Filformat':'.mp4',
+      'Maks filstørrelse':'200 MB', 'Leveringsformat':'VAST 2.0 eller VAST 3.0 tag',
+      'Alternativt':'Videofil + click URL + (valgfri) impressiontracker'
+    }},
+    postetekst:null, leveranse:'VAST-tag eller videofil leveres til Moodgruppen'
   },
-  {
-    id:'jcd-digital-standard', name:'JCDecaux – Digital Standard', sub:'9:16 · T-bane, tog, shopping, gater', color:'#003087',
+  'jcd-digital-standard': {
+    name:'Digital Standard 9:16', color:'#003087', cat:'ooh', sub:'jcd-digital',
     hasImage:true, hasVideo:true,
     specs:{
-      image:{
-        'Format':'9:16 – 2160×3840 px (statisk JPG)',
-        'Filformat':'JPG',
-        'Fargemodus':'RGB',
-        'Oppløsning':'72 ppi',
-        'Merknad':'OBS: Filer må leveres rotert -90° mot klokken'
-      },
-      video:{
-        'Format':'9:16 – 1080×1920 px',
-        'Filformat':'MP4 (H264)',
-        'Fargemodus':'RGB',
-        'Spotlengde':'10 sek',
-        'Bildefrekvens':'25 fps',
-        'Bithastighet':'Maks 8 mbit/s',
-        'Merknad':'Filer må leveres rotert -90° mot klokken'
-      }
+      image:{ 'Format':'9:16 – 2160×3840 px', 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi', 'Merknad':'Leveres rotert -90° mot klokken' },
+      video:{ 'Format':'9:16 – 1080×1920 px', 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s', 'Merknad':'Leveres rotert -90° mot klokken' }
     },
-    postetekst:null,
-    leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
     specLink:'https://jcdecaux.no/specifications/all-arenas/technical-spesifications-all-arenas-digital.pdf'
   },
-  {
-    id:'jcd-eurosize', name:'JCDecaux – Eurosize', sub:'Statisk · T-bane, tog, gater', color:'#003087',
+  'jcd-eurosize': {
+    name:'Eurosize (statisk)', color:'#003087', cat:'ooh', sub:'jcd-statisk',
     hasImage:true, hasVideo:false,
-    specs:{
-      image:{
-        'Format':'1185×1750 mm (fysisk)',
-        'Synlig område':'1160×1710 mm',
-        'Filformat':'PDF (trykkferdig)',
-        'Fargemodus':'CMYK',
-        'Oppløsning':'100 dpi',
-        'Dynamisk innhold':'Ikke støttet – kun stillbilder'
-      }
-    },
-    postetekst:null,
-    leveranse:'motiv@jcdecaux.com · Frist: 9 virkedager før kampanjestart',
+    specs:{ image:{ 'Format':'1185×1750 mm', 'Synlig område':'1160×1710 mm', 'Filformat':'PDF (trykkferdig)', 'Fargemodus':'CMYK', 'Oppløsning':'100 dpi' }},
+    postetekst:null, leveranse:'motiv@jcdecaux.com · Frist: 9 virkedager før kampanjestart',
     specLink:'https://jcdecaux.no/specifications/all-arenas/technical-spesifications-all-arenas-eurosize.pdf'
   },
-  {
-    id:'jcd-oslo-s-xxl', name:'JCDecaux – Oslo S XXL', sub:'Digital · Tog', color:'#003087',
+  'jcd-jernbanetorget-premium': {
+    name:'Jernbanetorget Premium', color:'#003087', cat:'ooh', sub:'jcd-digital',
     hasImage:true, hasVideo:true,
     specs:{
-      image:{
-        'Format':'Se offisiell spec (varierer)',
-        'Filformat':'JPG',
-        'Fargemodus':'RGB',
-        'Oppløsning':'72 ppi'
-      },
-      video:{
-        'Filformat':'MP4 (H264)',
-        'Spotlengde':'10 sek',
-        'Bildefrekvens':'25 fps',
-        'Bithastighet':'Maks 8 mbit/s'
-      }
+      image:{ 'Format':'3120×944 px', 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
+      video:{ 'Format':'3120×944 px', 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null,
-    leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
-    specLink:'https://jcdecaux.no/specifications/rail/technical-spesifications-rail-oslo-s-xxl.pdf'
-  },
-  {
-    id:'jcd-jernbanetorget-premium', name:'JCDecaux – Jernbanetorget Premium', sub:'Digital · T-bane', color:'#003087',
-    hasImage:true, hasVideo:true,
-    specs:{
-      image:{
-        'Format':'3120×944 px',
-        'Filformat':'JPG',
-        'Fargemodus':'RGB',
-        'Oppløsning':'72 ppi'
-      },
-      video:{
-        'Format':'3120×944 px',
-        'Filformat':'MP4 (H264)',
-        'Spotlengde':'10 sek',
-        'Bildefrekvens':'25 fps',
-        'Bithastighet':'Maks 8 mbit/s'
-      }
-    },
-    postetekst:null,
-    leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
     specLink:'https://jcdecaux.no/specifications/metro/technical-spesifications-metro-jernbanetorget-premium.pdf'
   },
-  {
-    id:'jcd-xtrack', name:'JCDecaux – X-track Premium', sub:'Digital · Jernbanetorget, Stortinget, Nationaltheatret, Majorstuen', color:'#003087',
+  'jcd-xtrack': {
+    name:'X-track Premium', color:'#003087', cat:'ooh', sub:'jcd-digital',
     hasImage:true, hasVideo:true,
     specs:{
-      image:{
-        'Format':'1600×1000 px',
-        'Fysisk størrelse':'400×250 cm (10 m²)',
-        'Filformat':'JPG',
-        'Fargemodus':'RGB',
-        'Oppløsning':'72 ppi'
-      },
-      video:{
-        'Format':'1600×1000 px',
-        'Filformat':'MP4 (H264)',
-        'Spotlengde':'10 sek',
-        'Bildefrekvens':'25 fps',
-        'Bithastighet':'Maks 8 mbit/s'
-      }
+      image:{ 'Format':'1600×1000 px', 'Fysisk størrelse':'400×250 cm (10 m²)', 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
+      video:{ 'Format':'1600×1000 px', 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null,
-    leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
     specLink:'https://jcdecaux.no/specifications/metro/technical-spesifications-metro-x-track-premium.pdf'
   },
-  {
-    id:'bauer-adshel', name:'Bauer – Adshel Classic', sub:'Statisk OOH', color:'#004B87',
-    hasImage:true, hasVideo:false,
-    isBauer:true,
+  'jcd-oslo-s-xxl': {
+    name:'Oslo S XXL', color:'#003087', cat:'ooh', sub:'jcd-digital',
+    hasImage:true, hasVideo:true,
     specs:{
-      image:{
-        'Format':'1185×1750 mm (fysisk)',
-        'Synlig område':'1160×1720 mm',
-        'Filformat':'PDF (trykkferdig)',
-        'Fargemodus':'CMYK – Coated Fogra39',
-        'Oppløsning':'Min 150 dpi',
-        'Bleed':'Min 3 mm',
-        'Fonter':'Må vektoriseres (lagres som tekstkonturer)',
-        'Filnavn':'Ordrenr_Kunde_Kampanjeuke_Format_Designnr'
-      }
+      image:{ 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
+      video:{ 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null,
-    leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: 10 virkedager før kampanjestart (eget trykk: 6 virkedager)',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    specLink:'https://jcdecaux.no/specifications/rail/technical-spesifications-rail-oslo-s-xxl.pdf'
+  },
+  'bauer-adshel': {
+    name:'Adshel Classic (statisk)', color:'#004B87', cat:'ooh', sub:'bauer-statisk',
+    hasImage:true, hasVideo:false, isBauer:true,
+    specs:{ image:{
+      'Format':'1185×1750 mm (fysisk)', 'Synlig område':'1160×1720 mm',
+      'Filformat':'PDF (trykkferdig)', 'Fargemodus':'CMYK – Coated Fogra39',
+      'Oppløsning':'Min 150 dpi', 'Bleed':'Min 3 mm',
+      'Fonter':'Må vektoriseres', 'Filnavn':'Ordrenr_Kunde_Kampanjeuke_Format_Designnr'
+    }},
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: 10 virkedager',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/adshel'
   },
-  {
-    id:'bauer-play-adshel', name:'Bauer – Play Adshel', sub:'Digitalt DOOH', color:'#004B87',
-    hasImage:true, hasVideo:true,
-    isBauer:true,
+  'bauer-play-adshel': {
+    name:'Play Adshel', color:'#004B87', cat:'ooh', sub:'bauer-digital',
+    hasImage:true, hasVideo:true, isBauer:true,
     specs:{
-      image:{
-        'Format':'1080×1920 px',
-        'Filformat':'JPG eller PNG',
-        'Fargemodus':'RGB, 72 dpi',
-        'Oppløsning':'300 ppi (statisk backup)',
-        'Merknad':'Statisk backup (JPG/PNG) er alltid påkrevd'
-      },
-      video:{
-        'Format':'1080×1920 px (portrait)',
-        'Filformat':'.mov eller .mp4',
-        'Fargemodus':'RGB, 72 dpi',
-        'Maks filstørrelse':'30 MB',
-        'Maks bitrate':'8000 kB/s (CBR)',
-        'Maks FPS':'25 fps',
-        'Spotlengde':'10 sek anbefalt',
-        'Lyd':'Ikke støttet',
-        'Merknad':'Statisk backup (JPG/PNG) alltid påkrevd'
-      }
+      image:{ 'Format':'1080×1920 px', 'Filformat':'JPG eller PNG', 'Fargemodus':'RGB, 72 dpi', 'Merknad':'Statisk backup alltid påkrevd' },
+      video:{ 'Format':'1080×1920 px', 'Filformat':'.mov eller .mp4', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet', 'Merknad':'Statisk backup (JPG/PNG) alltid påkrevd' }
     },
-    postetekst:null,
-    leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00 for samme dag',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-adshel-programmatic'
   },
-  {
-    id:'bauer-play-billboard', name:'Bauer – Play Billboard', sub:'Digitalt DOOH · Jernbanetorget, Trondheim, City Lade', color:'#004B87',
-    hasImage:true, hasVideo:true,
-    isBauer:true,
+  'bauer-play-billboard': {
+    name:'Play Billboard', color:'#004B87', cat:'ooh', sub:'bauer-digital',
+    hasImage:true, hasVideo:true, isBauer:true,
     specs:{
-      image:{
-        'Format – Jernbanetorget/Byporten':'896×672 px',
-        'Format – Trondheim torg':'784×384 px',
-        'Format – City Lade Cube':'1920×1080 px',
-        'Filformat':'JPG eller PNG, 72 dpi, RGB'
-      },
-      video:{
-        'Filformat':'.mov eller .mp4, RGB, 72 dpi',
-        'Maks filstørrelse':'30 MB',
-        'Maks bitrate':'8000 kB/s (CBR)',
-        'Maks FPS':'25 fps',
-        'Spotlengde':'10 sek anbefalt',
-        'Lyd':'Ikke støttet'
-      }
+      image:{ 'Format – Jernbanetorget/Byporten':'896×672 px', 'Format – Trondheim torg':'784×384 px', 'Format – City Lade Cube':'1920×1080 px', 'Filformat':'JPG eller PNG, 72 dpi, RGB' },
+      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
     },
-    postetekst:null,
-    leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00 for samme dag',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-billboard-programmatic'
   },
-  {
-    id:'bauer-play-spectacular', name:'Bauer – Play Spectacular', sub:'Digitalt DOOH · Lagunen', color:'#004B87',
-    hasImage:true, hasVideo:true,
-    isBauer:true,
+  'bauer-play-spectacular': {
+    name:'Play Spectacular', color:'#004B87', cat:'ooh', sub:'bauer-digital',
+    hasImage:true, hasVideo:true, isBauer:true,
     specs:{
-      image:{
-        'Format – Lagunen':'512×960 px',
-        'Filformat':'JPG eller PNG, 72 dpi, RGB'
-      },
-      video:{
-        'Filformat':'.mov eller .mp4, RGB, 72 dpi',
-        'Maks filstørrelse':'30 MB',
-        'Maks bitrate':'8000 kB/s (CBR)',
-        'Maks FPS':'25 fps',
-        'Spotlengde':'10 sek anbefalt',
-        'Lyd':'Ikke støttet'
-      }
+      image:{ 'Format – Lagunen':'512×960 px', 'Filformat':'JPG eller PNG, 72 dpi, RGB' },
+      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
     },
-    postetekst:null,
-    leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00 for samme dag',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-spectacular-programmatic'
   },
-  {
-    id:'display', name:'Programmatisk', sub:'Display / bannere', color:'#FF6B00',
+  'display': {
+    name:'Programmatisk Display', color:'#FF6B00', cat:'display', sub:'display',
     hasImage:true, hasVideo:true,
     specs:{
-      image:{
-        'IAB-standardformater':'970×250 · 300×600 · 300×250 · 160×600',
-        'Filformat':'JPG, PNG eller HTML5',
-        'Maks filstørrelse':'150 KB (statisk) · 200 KB (animert GIF/HTML5)'
-      },
-      video:{
-        'Format':'MP4 (via 3. part / adserver)',
-        'Merknad':'Avklar om mp4 leveres via 3. part eller direkte',
-        'Fallback':'Avklar per kampanje: jpg/bilde eller mp4-fallback?'
-      }
+      image:{ 'IAB-standardformater':'970×250 · 300×600 · 300×250 · 160×600', 'Filformat':'JPG, PNG eller HTML5', 'Maks filstørrelse':'150 KB (statisk) · 200 KB (animert)' },
+      video:{ 'Format':'MP4 (via 3. part / adserver)', 'Merknad':'Avklar om mp4 leveres via 3. part', 'Fallback':'Avklar: jpg/bilde eller mp4?' }
     },
-    postetekst:null,
-    leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
+    postetekst:null, leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
   },
-  {
-    id:'spotify-podcast', name:'Spotify Podcast', sub:'Lydspot / pre-roll & mid-roll', color:'#1DB954',
-    hasImage:false, hasVideo:false, hasAudio:true,
-    specs:{
-      audio:{
-        'Filformat':'MP3',
-        'Sample rate':'44.1 kHz',
-        'Bitrate':'Min 192 kbps',
-        'Kanaler':'Stereo',
-        'Lydnivaa':'-16 LUFS (+-1.5) · True Peak maks -2.0 dBTP',
-        'Varighet':'Maks 30 sek (pre-roll) · maks 60 sek (mid-roll)'
-      }
-    },
-    postetekst:null,
-    leveranse:'Via Spotify Ad Studio eller Direct IO',
+  'spotify-podcast': {
+    name:'Spotify Podcast', color:'#1DB954', cat:'audio', sub:'podcast',
+    hasAudio:true,
+    specs:{ audio:{ 'Filformat':'MP3', 'Sample rate':'44.1 kHz', 'Bitrate':'Min 192 kbps', 'Kanaler':'Stereo', 'Lydnivå':'-16 LUFS (±1.5) · True Peak maks -2.0 dBTP', 'Varighet':'Maks 30 sek (pre-roll) · maks 60 sek (mid-roll)' }},
+    postetekst:null, leveranse:'Via Spotify Ad Studio eller Direct IO',
     specLink:'https://ads.spotify.com/en-US/ad-specs/podcast-ad-specs/'
   },
-  {
-    id:'acast', name:'Acast', sub:'Lydspot - podcast', color:'#FF3D57',
-    hasImage:false, hasVideo:false, hasAudio:true,
-    specs:{
-      audio:{
-        'Filformat':'MP3 (kun MP3)',
-        'Bitrate':'128-160 kbps anbefalt (CBR)',
-        'Lydnivaa':'Normaliseres til -18 LUFS av Acast',
-        'Merknad':'Darlig lydkvalitet kan fore til avvisning'
-      }
-    },
-    postetekst:null,
-    leveranse:'Via Acast Marketplace eller kontakt Acast-salg',
+  'acast': {
+    name:'Acast', color:'#FF3D57', cat:'audio', sub:'podcast',
+    hasAudio:true,
+    specs:{ audio:{ 'Filformat':'MP3 (kun MP3)', 'Bitrate':'128–160 kbps anbefalt (CBR)', 'Lydnivå':'Normaliseres til -18 LUFS av Acast', 'Merknad':'Dårlig lydkvalitet kan føre til avvisning' }},
+    postetekst:null, leveranse:'Via Acast Marketplace eller kontakt Acast-salg',
     specLink:'https://learn.acast.com/en/articles/6515297-audio-file-specs'
   },
-  {
-    id:'kino-mdn', name:'Kino - MDN', sub:'Media Direct Norge / Nordisk Film Kino', color:'#E50914',
-    hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Filformat':'MOV, MP4, WMV, MPEG',
-        'Bildeformat':'16:9 (1920x1080 px anbefalt)',
-        'Bitrate video':'Min 20 Mbps',
-        'Lyd':'5.1 surround (anbefalt) eller 2.0 stereo',
-        'Lydnivaa':'Mikses til LEQ78 - IKKE hard limited lyd',
-        'Merknad':'Kino krever dynamisk lyd - ikke komprimert som for TV'
-      }
-    },
-    postetekst:null,
-    leveranse:'distribusjon@mdn.no · Frist: 3 virkedager for forste visningsdag',
+  'kino-mdn': {
+    name:'Kino – Media Direct Norge', color:'#E50914', cat:'kino', sub:'kino',
+    hasVideo:true,
+    durations:[15,20,30,45,60],
+    specs:{ video:{ 'Filformat':'MOV, MP4, WMV, MPEG', 'Bildeformat':'16:9 (1920×1080 px)', 'Bitrate video':'Min 20 Mbps', 'Lyd':'5.1 surround (anbefalt) eller 2.0 stereo', 'Lydnivå':'Mikses til LEQ78 – IKKE hard limited lyd' }},
+    postetekst:null, leveranse:'distribusjon@mdn.no · Frist: 3 virkedager før første visningsdag',
     specLink:'https://www.mdn.no/produksjonslink'
   },
-  {
-    id:'linear-tv', name:'Lineaer TV', sub:'TV2, TVNorge, Discovery, WBD, Viasat m.fl.', color:'#1a1a2e',
-    hasImage:false, hasVideo:true,
-    specs:{
-      video:{
-        'Filformat':'HD (1920x1080) via Peach eller Extremereach',
-        'Lydnivaa':'-23 LUFS (R128 EBU-standard)',
-        'Nielsen-kode':'Pakrevd - bestilles pa filmkode.no',
-        'Leveringsplattform':'Peach (peach.me) eller Extremereach',
-        'Merknad':'Adtoox og IMDcloud er na slatt sammen til Peach'
-      }
-    },
-    postetekst:null,
-    leveranse:'Via Peach eller Extremereach · Frist: 4 virkedager for forste visning · Nielsen-kode: filmkode.no',
+  'linear-tv': {
+    name:'Lineær TV', color:'#1a1a2e', cat:'tv', sub:'linear-tv',
+    hasVideo:true,
+    durations:[10,15,20,30,45,60],
+    specs:{ video:{ 'Filformat':'HD (1920×1080) via Peach eller Extremereach', 'Lydnivå':'-23 LUFS (R128 EBU-standard)', 'Nielsen-kode':'Påkrevd – bestilles på filmkode.no', 'Leveringsplattform':'Peach (peach.me) eller Extremereach', 'Merknad':'Adtoox og IMDcloud er nå Peach' }},
+    postetekst:null, leveranse:'Via Peach eller Extremereach · Frist: 4 virkedager · Nielsen-kode: filmkode.no',
     specLink:'https://annonsere.tv2.no/tv/reklamefilm'
+  }
+};
+
+// ─── TRESTRUKTUR ─────────────────────────────────────────────────────────────
+const TREE = [
+  {
+    id:'some', label:'Sosiale medier', icon:'📱',
+    subs:[
+      { id:'meta', label:'Meta (Facebook & Instagram)', channels:['meta-bilde','meta-video'] },
+      { id:'tiktok', label:'TikTok', channels:['tiktok'] },
+      { id:'snapchat', label:'Snapchat', channels:['snapchat-bilde','snapchat-video'] },
+      { id:'youtube', label:'YouTube', channels:['youtube'] }
+    ]
   },
+  {
+    id:'onlinevideo', label:'Online video', icon:'🎬',
+    subs:[
+      { id:'vgtv', label:'VGTV', channels:['vgtv'] },
+      { id:'tv2play', label:'TV2 Play / Discovery+', channels:['tv2play'] },
+      { id:'allertv', label:'Aller TV', channels:['allertv'] },
+      { id:'azerion', label:'Azerion Gaming', channels:['azerion'] }
+    ]
+  },
+  {
+    id:'ooh', label:'Utendørsannonsering (OOH / DOOH)', icon:'🏙️',
+    subs:[
+      { id:'jcd-digital', label:'JCDecaux – Digital', channels:['jcd-digital-standard','jcd-jernbanetorget-premium','jcd-xtrack','jcd-oslo-s-xxl'] },
+      { id:'jcd-statisk', label:'JCDecaux – Statisk', channels:['jcd-eurosize'] },
+      { id:'bauer-digital', label:'Bauer Media – Digital (Play)', channels:['bauer-play-adshel','bauer-play-billboard','bauer-play-spectacular'] },
+      { id:'bauer-statisk', label:'Bauer Media – Statisk', channels:['bauer-adshel'] }
+    ]
+  },
+  {
+    id:'display', label:'Programmatisk display', icon:'🖥️',
+    subs:[
+      { id:'display', label:'Display / bannere', channels:['display'] }
+    ]
+  },
+  {
+    id:'audio', label:'Podcast / lyd', icon:'🎙️',
+    subs:[
+      { id:'podcast', label:'Podcast-plattformer', channels:['spotify-podcast','acast'] }
+    ]
+  },
+  {
+    id:'kino', label:'Kino', icon:'🎥',
+    subs:[
+      { id:'kino', label:'Media Direct Norge', channels:['kino-mdn'] }
+    ]
+  },
+  {
+    id:'tv', label:'Lineær TV', icon:'📺',
+    subs:[
+      { id:'linear-tv', label:'TV2, TVNorge, Discovery, WBD, Viasat', channels:['linear-tv'] }
+    ]
+  }
 ];
 
+// ─── STATE ───────────────────────────────────────────────────────────────────
 let sel = {};
+let openCats = {};
+let openSubs = {};
 
 function upd() { renderConfigAndBtn(); }
 
-function toggleCh(id) {
+function toggleCat(id) {
+  openCats[id] = !openCats[id];
+  renderTree();
+}
+
+function toggleSub(id) {
+  openSubs[id] = !openSubs[id];
+  renderTree();
+}
+
+function toggleFormat(id) {
   if (sel[id]) {
     delete sel[id];
   } else {
-    const ch = CHANNELS.find(c=>c.id===id);
-    const defaultType = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
-    sel[id] = { types: defaultType, count:'', ordernr:'', duration:'', notes:'' };
+    const ch = CHANNELS[id];
+    const defaultTypes = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
+    sel[id] = { types: defaultTypes, count:'', ordernr:'', durations:[], customDur:'', notes:'' };
   }
-  renderGrid();
+  renderTree();
   renderConfigAndBtn();
 }
 
@@ -861,49 +504,138 @@ function toggleType(id, t) {
   renderConfigAndBtn();
 }
 
-function setCf(id, field, val) { sel[id][field]=val; renderConfigAndBtn(); }
-
-function renderGrid() {
-  document.getElementById('ch-grid').innerHTML = CHANNELS.map(ch=>`
-    <div class="ch-card ${sel[ch.id]?'active':''}" onclick="toggleCh('${ch.id}')">
-      <div class="ch-check">✓</div>
-      <div class="ch-name"><span class="ch-dot" style="background:${ch.color}"></span>${ch.name}</div>
-      <div class="ch-sub">${ch.sub}</div>
-    </div>`).join('');
+function toggleDur(id, d) {
+  const durs = sel[id].durations;
+  const i = durs.indexOf(d);
+  if (i>=0) sel[id].durations = durs.filter(x=>x!==d);
+  else sel[id].durations = [...durs, d].sort((a,b)=>a-b);
+  renderConfigAndBtn();
 }
 
+function setCf(id, field, val) { sel[id][field]=val; renderConfigAndBtn(); }
+
+// ─── RENDER TREE ─────────────────────────────────────────────────────────────
+function formatRow(id) {
+  const ch = CHANNELS[id];
+  const isChecked = !!sel[id];
+  const typeLabel = ch.hasAudio?'Lyd':ch.hasVideo&&ch.hasImage?'Bilde/Video':ch.hasVideo?'Video':'Bilde';
+  return `
+    <div class="format-row" onclick="toggleFormat('${id}')">
+      <div class="format-checkbox ${isChecked?'checked':''}">  ${isChecked?'&#10003;':''}</div>
+      <span class="format-dot" style="background:${ch.color}"></span>
+      <span class="format-name">${ch.name}</span>
+      <span class="format-sub">${typeLabel}</span>
+    </div>`;
+}
+
+function countSelected(channels) {
+  return channels.filter(id=>sel[id]).length;
+}
+
+function renderTree() {
+  document.getElementById('tree').innerHTML = TREE.map(cat => {
+    const catOpen = openCats[cat.id];
+    const allChannels = cat.subs.flatMap(s=>s.channels);
+    const catCount = countSelected(allChannels);
+
+    // Regn ut om kategorien er "flat":
+    // Flat = alle subs har kun 1 kanal, eller hele kategorien har bare 1 sub
+    // I begge tilfeller viser vi kanalene direkte uten sub-header
+    const isFlat = cat.subs.every(s => s.channels.length === 1);
+
+    const innerContent = isFlat
+      // FLAT: vis alle kanaler direkte under kategorien, ingen sub-header
+      ? `<div class="tree-formats" style="display:block;border-top:1px solid #f0f0f0">
+          ${allChannels.map(id => formatRow(id)).join('')}
+        </div>`
+      // FULL TRE: vis sub-headers med egne format-lister
+      : cat.subs.map(sub => {
+          const subOpen = openSubs[sub.id];
+          const subCount = countSelected(sub.channels);
+          const singleChannel = sub.channels.length === 1;
+
+          // Sub med kun 1 kanal: vis direkte som en format-rad uten sub-header
+          if (singleChannel) {
+            return `<div style="border-bottom:1px solid #f8f8f8">
+              ${formatRow(sub.channels[0])}
+            </div>`;
+          }
+
+          // Sub med flere kanaler: vis sub-header + utfellbar liste
+          return `
+            <div class="tree-sub-header" onclick="toggleSub('${sub.id}')">
+              <span>${sub.label}</span>
+              ${subCount>0?`<span style="background:var(--mood-accent1);color:white;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:6px">${subCount}</span>`:''}
+              <span class="tree-sub-arrow ${subOpen?'open':''}">▶</span>
+            </div>
+            <div class="tree-formats ${subOpen?'open':''}">
+              ${sub.channels.map(id => formatRow(id)).join('')}
+            </div>`;
+        }).join('');
+
+    return `
+      <div class="tree-category">
+        <div class="tree-cat-header" onclick="toggleCat('${cat.id}')">
+          <span class="tree-cat-icon">${cat.icon}</span>
+          <span>${cat.label}</span>
+          ${catCount>0?`<span style="margin-left:8px;background:var(--mood-accent1);color:white;border-radius:10px;padding:1px 8px;font-size:11px">${catCount}</span>`:''}
+          <span class="tree-cat-arrow ${catOpen?'open':''}">▶</span>
+        </div>
+        <div class="tree-level2 ${catOpen?'open':''}">
+          ${innerContent}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ─── RENDER CONFIG ────────────────────────────────────────────────────────────
 function renderConfigAndBtn() {
   const ids = Object.keys(sel);
   const card = document.getElementById('config-card');
   const btn = document.getElementById('gen-btn');
-
   if (ids.length===0) { card.style.display='none'; btn.disabled=true; return; }
-  card.style.display='block';
-  btn.disabled=false;
+  card.style.display='block'; btn.disabled=false;
 
-  document.getElementById('config-list').innerHTML = ids.map(id=>{
-    const ch = CHANNELS.find(c=>c.id===id);
+  document.getElementById('config-list').innerHTML = ids.map(id => {
+    const ch = CHANNELS[id];
     const cfg = sel[id];
+    const durationOptions = ch.durations || [];
+
     return `<div class="config-block">
       <div class="config-head">
         <div class="config-name">
           <span style="width:10px;height:10px;border-radius:50%;background:${ch.color};display:inline-block"></span>
           ${ch.name}
         </div>
-        <button class="remove-btn" onclick="toggleCh('${id}')">Fjern</button>
+        <button class="remove-btn" onclick="toggleFormat('${id}')">Fjern</button>
       </div>
       <div class="config-body">
         ${ch.hasImage&&ch.hasVideo?`
-        <div style="margin-bottom:10px">
-          <label style="margin-bottom:6px">Kreativtype</label>
-          <div class="type-toggles">
-            <button class="type-btn ${cfg.types.includes('image')?'on':''}" onclick="toggleType('${id}','image')">Bilde</button>
-            <button class="type-btn ${cfg.types.includes('video')?'on':''}" onclick="toggleType('${id}','video')">Film / Video</button>
-          </div>
-        </div>`:''}
-        <div class="mini-row">
+          <div style="margin-bottom:10px">
+            <label style="margin-bottom:6px">Kreativtype</label>
+            <div class="type-toggles">
+              <button class="type-btn ${cfg.types.includes('image')?'on':''}" onclick="toggleType('${id}','image')">Bilde</button>
+              <button class="type-btn ${cfg.types.includes('video')?'on':''}" onclick="toggleType('${id}','video')">Film / Video</button>
+            </div>
+          </div>`:''}
+
+        ${durationOptions.length>0?`
+          <div class="duration-section">
+            <div class="duration-label">Sekundlengder (velg alle aktuelle)</div>
+            <div class="duration-pills">
+              ${durationOptions.map(d=>`
+                <div class="dur-pill ${cfg.durations.includes(d)?'selected':''}" onclick="toggleDur('${id}',${d})">
+                  <span class="dur-num">${d}</span>
+                  <span class="dur-unit">sek</span>
+                </div>`).join('')}
+            </div>
+            <div class="dur-custom" style="margin-top:8px">
+              <input placeholder="Annen lengde, f.eks. 45 sek" value="${cfg.customDur||''}" oninput="setCf('${id}','customDur',this.value)" style="width:200px;font-size:12px;padding:5px 9px">
+            </div>
+          </div>`:''}
+
+        <div class="mini-row" style="margin-top:10px">
           ${!ch.hasAudio?`<div class="mini-field"><label>Antall kreativer</label><input value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>`:''}
-          ${(ch.hasVideo||ch.hasAudio)?`<div class="mini-field"><label>Varighet</label><input value="${cfg.duration||''}" placeholder="f.eks. 15 sek / 6+15 sek" oninput="setCf('${id}','duration',this.value)"></div>`:''}
           ${ch.isBauer?`<div class="mini-field"><label>Ordrenummer</label><input value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordernr',this.value)"></div>`:''}
           <div class="mini-field" style="flex:2"><label>Merknad</label><input value="${cfg.notes}" placeholder="Særlige krav, varianter..." oninput="setCf('${id}','notes',this.value)"></div>
         </div>
@@ -912,6 +644,7 @@ function renderConfigAndBtn() {
   }).join('');
 }
 
+// ─── BUILD PDF ────────────────────────────────────────────────────────────────
 function specRows(obj) {
   return Object.entries(obj).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
 }
@@ -923,13 +656,12 @@ function now() {
 function getOpenItems() {
   const items = [];
   const ids = Object.keys(sel);
-  if (ids.includes('meta')) items.push('Meta: Bekreft antall kreativer per format (min 3 anbefalt for Advantage+)');
-  const bauerIds = ids.filter(id=>id.startsWith('bauer'));
-  bauerIds.forEach(id=>{ if(!sel[id].ordernr) items.push(`${CHANNELS.find(c=>c.id===id).name}: Ordrenummer mangler – påkrevd for direkteleveranse`); });
+  if (ids.includes('meta-video')||ids.includes('meta-bilde')) items.push('Meta: Bekreft antall kreativer per format (min 3 anbefalt for Advantage+)');
+  ids.filter(id=>CHANNELS[id].isBauer).forEach(id=>{ if(!sel[id].ordernr) items.push(`${CHANNELS[id].name}: Ordrenummer mangler – påkrevd for direkteleveranse`); });
   if (ids.includes('display')) items.push('Display: Avklar om mp4 leveres via 3. part, og om fallback er jpg eller mp4');
   if (ids.includes('vgtv')) items.push('VGTV: Bekreft at VAST-tag er satt opp uten VPAID');
   if (ids.includes('azerion')) items.push('Azerion: Velg leveringsmetode – VAST-tag eller videofil + click URL');
-  if (ids.some(id=>['meta','tiktok','snapchat'].includes(id))) items.push('Postetekster: Avklar om produksjonsbyrå eller Moodgruppen/klient leverer tekster');
+  if (ids.some(id=>['meta-bilde','meta-video','tiktok','snapchat-bilde','snapchat-video'].includes(id))) items.push('Postetekster: Avklar hvem som leverer tekster – Moodgruppen eller klient');
   return items;
 }
 
@@ -941,16 +673,16 @@ function buildPDF() {
   const agency = document.getElementById('f-agency').value;
   const contact = document.getElementById('f-contact').value;
 
-  const blocks = ids.map(id=>{
-    const ch = CHANNELS.find(c=>c.id===id);
+  const blocks = ids.map(id => {
+    const ch = CHANNELS[id];
     const cfg = sel[id];
     let sections = '';
 
-    const allTypes = cfg.types.length ? cfg.types : (ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image']);
-    allTypes.forEach(t=>{
+    const allTypes = cfg.types.length ? cfg.types : (ch.hasAudio?['audio']:ch.hasVideo?['video']:['image']);
+    allTypes.forEach(t => {
       const specs = ch.specs[t];
       if (!specs) return;
-      const label = t==='image' ? 'Bilde' : t==='audio' ? 'Lyd / Audio' : 'Film / Video';
+      const label = t==='image'?'Bilde':t==='audio'?'Lyd / Audio':'Film / Video';
       sections += `
         <div class="spec-group">
           <div class="spec-group-title">${label}</div>
@@ -966,6 +698,19 @@ function buildPDF() {
         </div>`;
     });
 
+    // Sekundlengder
+    const durList = [...cfg.durations];
+    if (cfg.customDur) durList.push(cfg.customDur);
+    if (durList.length>0) {
+      sections += `
+        <div class="spec-group">
+          <div class="spec-group-title">Sekundlengder</div>
+          <div class="duration-badge">
+            ${durList.map(d=>`<span class="dur-badge-item">${typeof d==='number'?d+' sek':d}</span>`).join('')}
+          </div>
+        </div>`;
+    }
+
     if (ch.postetekst) {
       sections += `
         <div class="spec-group">
@@ -974,17 +719,13 @@ function buildPDF() {
         </div>`;
     }
 
-    const leveranseVal = ch.isBauer && cfg.ordernr
-      ? `${ch.leveranse}<br><strong>Ordrenummer: ${cfg.ordernr}</strong>`
-      : ch.leveranse;
-
+    const leveranseVal = ch.isBauer&&cfg.ordernr ? `${ch.leveranse}<br><strong>Ordrenummer: ${cfg.ordernr}</strong>` : ch.leveranse;
     sections += `
       <div class="spec-group">
         <div class="spec-group-title">Leveranse</div>
         <table class="spec-tbl">
           <tr><td>Leveres til</td><td>${leveranseVal}</td></tr>
-          ${cfg.duration?`<tr><td>Varighet</td><td style="font-weight:500">${cfg.duration}</td></tr>`:''}
-          ${deadline?`<tr><td>Kampanjedeadline</td><td style="color:#FEA528;font-weight:700">${deadline}</td></tr>`:''}
+          ${deadline?`<tr><td>Deadline</td><td style="color:#FEA528;font-weight:700">${deadline}</td></tr>`:''}
           ${cfg.notes?`<tr><td>Merknad</td><td>${cfg.notes}</td></tr>`:''}
           ${ch.specLink?`<tr><td>Offisiell spec</td><td><a href="${ch.specLink}" target="_blank" style="color:#585FFF">${ch.specLink}</a></td></tr>`:''}
         </table>
@@ -992,17 +733,16 @@ function buildPDF() {
 
     return `
       <div class="ch-block">
-        <div class="ch-block-head" style="background:${ch.color}18;border-left:3px solid ${ch.color}">
+        <div class="ch-block-head" style="background:${ch.color}15;border-left:3px solid ${ch.color}">
           <span style="width:11px;height:11px;border-radius:50%;background:${ch.color};display:inline-block"></span>
           ${ch.name}
-          <span class="ch-block-sub">– ${ch.sub}</span>
+          <span class="ch-block-sub">– ${ch.cat==='ooh'?'OOH/DOOH':ch.cat==='some'?'Sosiale medier':ch.cat==='onlinevideo'?'Online video':ch.cat}</span>
         </div>
         <div class="ch-block-body">${sections}</div>
       </div>`;
   }).join('');
 
   const openItems = getOpenItems();
-
   return `
     <div class="pdf">
       <div class="pdf-header">
@@ -1019,15 +759,12 @@ function buildPDF() {
           <div class="pdf-meta-item">${now()}</div>
         </div>
       </div>
-
       ${blocks}
-
       ${openItems.length>0?`
       <div class="open-box">
         <div class="open-box-title">Åpne punkter for avklaring</div>
         ${openItems.map(i=>`<div class="open-item">${i}</div>`).join('')}
       </div>`:''}
-
       <div class="pdf-footer">
         <span style="font-weight:600;color:#585FFF;letter-spacing:0.04em">MOODGRUPPEN</span>
         <span>Materiellspesifikasjon · Safezones fra offisielle kilder · ${now()}</span>
@@ -1042,11 +779,7 @@ function generate() {
       <div class="preview-bar">
         <span class="preview-label">Forhåndsvisning</span>
         <button class="print-btn" onclick="window.print()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 6 2 18 2 18 9"/>
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-            <rect x="6" y="14" width="12" height="8"/>
-          </svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Skriv ut / Lagre PDF
         </button>
       </div>
@@ -1055,7 +788,8 @@ function generate() {
   area.scrollIntoView({behavior:'smooth', block:'start'});
 }
 
-renderGrid();
+// Init
+renderTree();
 </script>
 </body>
 </html>
