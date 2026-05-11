@@ -12,101 +12,124 @@
   --mood-accent3: #FEA528; --mood-accent4: #00C17C; --mood-bg: #F7F7F7;
   --border: #e0e0e0; --white: #ffffff; --radius: 10px; --radius-sm: 6px;
 }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f7f7f5; color: var(--mood-dark); font-size: 14px; line-height: 1.6; min-height: 100vh; }
-header { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f0ee; color: var(--mood-dark); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+header { background: var(--white); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
 .logo-mark { width: 32px; height: 32px; background: var(--mood-accent1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; }
 .header-title { font-size: 15px; font-weight: 600; }
 .header-sub { font-size: 12px; color: var(--mood-secondary); margin-left: auto; }
-.main { max-width: 900px; margin: 0 auto; padding: 28px 24px; }
-.section-label { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mood-secondary); margin-bottom: 10px; }
-.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+.main { max-width: 960px; margin: 0 auto; padding: 28px 24px; }
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mood-secondary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
 label { display: block; font-size: 12px; color: var(--mood-secondary); margin-bottom: 5px; font-weight: 500; }
-input { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; background: var(--white); color: var(--mood-dark); outline: none; transition: border-color 0.15s; }
-input:focus { border-color: var(--mood-accent1); }
+input[type=text], input[type=date], input[type=number] { width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 14px; font-family: inherit; background: var(--white); color: var(--mood-dark); outline: none; transition: border-color 0.15s; }
+input:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,95,255,0.1); }
+
+/* ── AUTO-FRIST BADGE ─── */
+.auto-deadline-info { background: #EEF0FF; border: 1px solid #c5c9ff; border-radius: var(--radius-sm); padding: 10px 14px; margin-top: 10px; font-size: 12px; color: #3a3a7a; }
+.auto-deadline-info strong { color: var(--mood-accent1); }
+
+/* ── UPLOAD MEDIEPLAN ─── */
+.upload-zone { border: 2px dashed var(--border); border-radius: var(--radius-sm); padding: 24px; text-align: center; cursor: pointer; transition: all 0.15s; background: var(--mood-bg); margin-bottom: 12px; }
+.upload-zone:hover, .upload-zone.drag-over { border-color: var(--mood-accent1); background: #EEF0FF; }
+.upload-zone input[type=file] { display:none; }
+.upload-icon { font-size: 28px; margin-bottom: 8px; }
+.upload-title { font-size: 13px; font-weight: 600; color: var(--mood-dark); }
+.upload-sub { font-size: 11px; color: var(--mood-secondary); margin-top: 3px; }
+.upload-result { background: #F0FFF8; border: 1px solid #00C17C; border-radius: var(--radius-sm); padding: 12px 14px; font-size: 12px; color: #006645; margin-top: 8px; display:none; }
+.upload-result.error { background: #FFF0F0; border-color: #E24B4A; color: #7a2020; }
 
 /* ── KANALTRE ─── */
-.tree-category { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
-.tree-cat-header { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--mood-bg); cursor: pointer; user-select: none; font-weight: 600; font-size: 13px; }
-.tree-cat-header:hover { background: #eeeeff; }
+.tree-category { margin-bottom: 8px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; transition: border-color 0.15s; }
+.tree-category:has(.format-checkbox.checked) { border-color: var(--mood-accent1); }
+.tree-cat-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; background: var(--mood-bg); cursor: pointer; user-select: none; font-weight: 600; font-size: 13px; transition: background 0.12s; }
+.tree-cat-header:hover { background: #e8eaff; }
 .tree-cat-icon { font-size: 16px; }
-.tree-cat-arrow { margin-left: auto; font-size: 11px; color: var(--mood-secondary); transition: transform 0.2s; }
+.tree-cat-label { flex: 1; }
+.tree-cat-count { background: var(--mood-accent1); color: white; border-radius: 10px; padding: 1px 8px; font-size: 11px; font-weight: 600; }
+.tree-cat-arrow { font-size: 10px; color: var(--mood-secondary); transition: transform 0.2s; }
 .tree-cat-arrow.open { transform: rotate(90deg); }
 .tree-level2 { border-top: 1px solid var(--border); display: none; }
 .tree-level2.open { display: block; }
-.tree-sub-header { display: flex; align-items: center; gap: 8px; padding: 9px 14px 9px 28px; cursor: pointer; font-size: 13px; font-weight: 500; background: var(--white); border-bottom: 1px solid #f0f0f0; user-select: none; }
-.tree-sub-header:hover { background: #f9f9ff; }
+.tree-sub-header { display: flex; align-items: center; gap: 8px; padding: 9px 16px 9px 32px; cursor: pointer; font-size: 12px; font-weight: 600; background: #fafafa; border-bottom: 1px solid #f2f2f2; user-select: none; text-transform: uppercase; letter-spacing: 0.05em; color: var(--mood-secondary); }
+.tree-sub-header:hover { background: #f0f0ff; }
 .tree-sub-arrow { margin-left: auto; font-size: 10px; color: var(--mood-secondary); transition: transform 0.2s; }
 .tree-sub-arrow.open { transform: rotate(90deg); }
-.tree-formats { display: none; border-top: 1px solid #f0f0f0; }
+.tree-sub-count { background: var(--mood-accent1); color: white; border-radius: 10px; padding: 1px 6px; font-size: 10px; font-weight: 600; }
+.tree-formats { display: none; }
 .tree-formats.open { display: block; }
-.format-row { display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 44px; border-bottom: 1px solid #f8f8f8; cursor: pointer; user-select: none; }
+.format-row { display: flex; align-items: center; gap: 10px; padding: 9px 16px 9px 48px; border-bottom: 1px solid #f8f8f8; cursor: pointer; user-select: none; transition: background 0.1s; }
 .format-row:hover { background: #f5f5ff; }
 .format-row:last-child { border-bottom: none; }
-.format-checkbox { width: 16px; height: 16px; border: 1.5px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; }
-.format-checkbox.checked { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; font-size: 10px; }
-.format-name { font-size: 13px; color: var(--mood-dark); }
-.format-sub { font-size: 11px; color: var(--mood-secondary); margin-left: auto; }
-.format-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.format-row.direct { padding-left: 32px; }
+.format-checkbox { width: 18px; height: 18px; border: 1.5px solid var(--border); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.12s; font-size: 11px; color: transparent; }
+.format-checkbox.checked { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
+.format-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.format-name { font-size: 13px; color: var(--mood-dark); flex: 1; }
+.format-tag { font-size: 10px; padding: 2px 7px; border-radius: 10px; background: #f0f0f0; color: var(--mood-secondary); font-weight: 500; }
 
-/* ── SELECTED CONFIGS ─── */
-.config-block { border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; }
+/* ── CONFIG ─── */
+.config-block { border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; }
+.config-block:has(.format-checkbox.checked) { border-color: var(--border); }
 .config-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--mood-bg); border-bottom: 1px solid var(--border); }
 .config-name { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-.remove-btn { font-size: 11px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: white; color: var(--mood-secondary); }
+.config-deadline { font-size: 11px; color: var(--mood-accent3); font-weight: 600; background: #FFF3E0; padding: 2px 8px; border-radius: 4px; border: 1px solid #FEA528; }
+.remove-btn { font-size: 11px; padding: 3px 9px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; background: white; color: var(--mood-secondary); transition: all 0.1s; }
 .remove-btn:hover { border-color: #E24B4A; color: #E24B4A; }
 .config-body { padding: 12px 14px; }
 .type-toggles { display: flex; gap: 7px; margin-bottom: 10px; }
-.type-btn { font-size: 12px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; background: white; color: var(--mood-secondary); transition: all 0.1s; }
+.type-btn { font-size: 12px; padding: 5px 14px; border: 1.5px solid var(--border); border-radius: 20px; cursor: pointer; background: white; color: var(--mood-secondary); transition: all 0.1s; font-weight: 500; }
 .type-btn.on { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
 .mini-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .mini-field { flex: 1; min-width: 110px; }
 .mini-field label { font-size: 11px; }
 .mini-field input { padding: 5px 9px; font-size: 13px; }
-
-/* ── SEKUNDLENGDER ─── */
 .duration-section { margin-top: 10px; }
-.duration-label { font-size: 11px; color: var(--mood-secondary); font-weight: 500; margin-bottom: 7px; }
+.duration-label { font-size: 11px; color: var(--mood-secondary); font-weight: 600; margin-bottom: 8px; }
 .duration-pills { display: flex; gap: 7px; flex-wrap: wrap; }
-.dur-pill { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--mood-secondary); transition: all 0.12s; flex-direction: column; gap: 1px; }
-.dur-pill:hover { border-color: var(--mood-accent1); color: var(--mood-accent1); }
+.dur-pill { width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border); background: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.12s; flex-direction: column; gap: 1px; }
+.dur-pill:hover { border-color: var(--mood-accent1); }
 .dur-pill.selected { border-color: var(--mood-accent1); background: var(--mood-accent1); color: white; }
 .dur-pill .dur-num { font-size: 14px; font-weight: 700; line-height: 1; }
-.dur-pill .dur-unit { font-size: 9px; font-weight: 400; opacity: 0.8; }
-.dur-custom { margin-top: 8px; }
-.dur-custom input { width: 180px; font-size: 12px; padding: 5px 9px; }
+.dur-pill .dur-unit { font-size: 9px; font-weight: 400; opacity: 0.75; }
+.dur-custom input { width: 190px; font-size: 12px; padding: 5px 9px; margin-top: 8px; }
 
 /* ── KNAPPER ─── */
-.gen-btn { width: 100%; padding: 13px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s; margin-top: 4px; }
+.gen-btn { width: 100%; padding: 14px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.15s; margin-top: 4px; letter-spacing: 0.01em; }
 .gen-btn:hover { background: #3a41cc; }
 .gen-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-/* ── PDF PREVIEW ─── */
+/* ── PREVIEW ─── */
 .preview-wrap { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-top: 20px; }
 .preview-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 18px; background: var(--mood-bg); border-bottom: 1px solid var(--border); }
 .preview-label { font-size: 12px; color: var(--mood-secondary); font-weight: 500; }
 .print-btn { display: flex; align-items: center; gap: 7px; padding: 7px 18px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; }
 .print-btn:hover { background: #3a41cc; }
+
+/* ── PDF INNHOLD ─── */
 .pdf { padding: 36px 40px; font-size: 13px; line-height: 1.65; }
-.pdf-header { border-bottom: 3px solid var(--mood-accent1); padding-bottom: 16px; margin-bottom: 26px; display: flex; justify-content: space-between; align-items: flex-start; }
-.pdf-title { font-size: 22px; font-weight: 700; color: #2F2B2B; letter-spacing: -0.3px; }
-.pdf-sub { font-size: 13px; color: #777777; margin-top: 2px; }
-.deadline-badge { display: inline-block; background: #FFF3E0; color: #2F2B2B; border: 1px solid #FEA528; border-radius: 4px; padding: 2px 9px; font-size: 12px; font-weight: 600; margin-top: 4px; }
-.pdf-meta { text-align: right; }
-.pdf-meta-item { font-size: 12px; color: #777777; line-height: 1.9; }
-.pdf-meta-item strong { color: #2F2B2B; }
+.pdf-header { border-bottom: 3px solid var(--mood-accent1); padding-bottom: 16px; margin-bottom: 26px; display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+.pdf-title { font-size: 22px; font-weight: 700; color: var(--mood-dark); letter-spacing: -0.3px; }
+.pdf-sub { font-size: 13px; color: var(--mood-secondary); margin-top: 2px; }
+.deadline-badge { display: inline-block; background: #FFF3E0; color: var(--mood-dark); border: 1px solid var(--mood-accent3); border-radius: 4px; padding: 2px 9px; font-size: 12px; font-weight: 600; margin-top: 4px; }
+.pdf-meta { text-align: right; flex-shrink: 0; }
+.pdf-meta-item { font-size: 12px; color: var(--mood-secondary); line-height: 1.9; }
+.pdf-meta-item strong { color: var(--mood-dark); }
 .ch-block { margin-bottom: 24px; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
 .ch-block-head { padding: 10px 16px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; border-bottom: 1px solid var(--border); }
-.ch-block-sub { font-size: 12px; color: var(--mood-secondary); font-weight: 400; }
+.ch-block-sub { font-size: 11px; color: var(--mood-secondary); font-weight: 400; }
+.ch-block-deadline { margin-left: auto; font-size: 11px; font-weight: 700; color: #c46a00; background: #FFF3E0; padding: 2px 9px; border-radius: 4px; border: 1px solid #FEA528; }
 .ch-block-body { padding: 16px 18px; }
 .spec-group { margin-bottom: 18px; }
 .spec-group:last-child { margin-bottom: 0; }
 .spec-group-title { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mood-secondary); margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
 .spec-tbl { width: 100%; border-collapse: collapse; }
-.spec-tbl td { padding: 4px 0; vertical-align: top; font-size: 13px; }
-.spec-tbl td:first-child { color: #777777; width: 42%; padding-right: 12px; }
-.spec-tbl td:last-child { font-weight: 500; color: #2F2B2B; }
+.spec-tbl td { padding: 4px 0; vertical-align: top; font-size: 12.5px; }
+.spec-tbl td:first-child { color: var(--mood-secondary); width: 40%; padding-right: 12px; }
+.spec-tbl td:last-child { font-weight: 500; color: var(--mood-dark); }
 .safezone-box { background: #EEEEFF; border-left: 3px solid var(--mood-accent1); padding: 8px 12px; border-radius: 0 4px 4px 0; font-size: 12px; color: #3a3a7a; margin-top: 8px; }
 .safezone-box a { color: var(--mood-accent1); text-decoration: none; font-weight: 500; }
 .duration-badge { display: inline-flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
@@ -115,11 +138,7 @@ input:focus { border-color: var(--mood-accent1); }
 .open-box-title { font-size: 12px; font-weight: 700; color: var(--mood-dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em; }
 .open-item { font-size: 12px; color: var(--mood-body); padding: 3px 0; display: flex; gap: 8px; }
 .open-item::before { content: "→"; color: var(--mood-accent1); flex-shrink: 0; }
-.pdf-footer { margin-top: 30px; padding-top: 12px; border-top: 2px dotted #BFBFBF; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #777777; }
-
-/* ── BREADCRUMB ─── */
-.breadcrumb { font-size: 11px; color: var(--mood-secondary); margin-bottom: 6px; }
-.breadcrumb span { color: var(--mood-accent1); }
+.pdf-footer { margin-top: 30px; padding-top: 12px; border-top: 2px dotted var(--mood-decor); display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--mood-secondary); }
 
 @media print {
   body { background: white; }
@@ -142,14 +161,38 @@ input:focus { border-color: var(--mood-accent1); }
   <div class="card">
     <div class="section-label">Kampanjeinformasjon</div>
     <div class="grid-2" style="margin-bottom:12px">
-      <div><label>Klient</label><input id="f-client" placeholder="f.eks. Fjordland AS" oninput="upd()"></div>
-      <div><label>Kampanjenavn</label><input id="f-campaign" placeholder="f.eks. Sommerkampanje 2026" oninput="upd()"></div>
+      <div><label>Klient</label><input type="text" id="f-client" placeholder="f.eks. Fjordland AS" oninput="upd()"></div>
+      <div><label>Kampanjenavn</label><input type="text" id="f-campaign" placeholder="f.eks. Sommerkampanje 2026" oninput="upd()"></div>
     </div>
-    <div class="grid-3">
-      <div><label>Materielldeadline</label><input id="f-deadline" placeholder="f.eks. 26. mai 2026" oninput="upd()"></div>
-      <div><label>Til produksjonsbyrå</label><input id="f-agency" placeholder="f.eks. Bacon & Co." oninput="upd()"></div>
-      <div><label>Kontaktperson</label><input id="f-contact" placeholder="Navn, e-post" oninput="upd()"></div>
+    <div class="grid-4">
+      <div>
+        <label>Kampanjestartdato</label>
+        <input type="date" id="f-start" oninput="upd()">
+        <div style="font-size:10px;color:var(--mood-secondary);margin-top:4px">Brukes til å beregne materiellfrister</div>
+      </div>
+      <div>
+        <label>Kampanjesluttdato</label>
+        <input type="date" id="f-end" oninput="upd()">
+      </div>
+      <div><label>Til produksjonsbyrå</label><input type="text" id="f-agency" placeholder="f.eks. Bacon & Co." oninput="upd()"></div>
+      <div><label>Kontaktperson</label><input type="text" id="f-contact" placeholder="Navn, e-post" oninput="upd()"></div>
     </div>
+    <div id="deadline-summary" style="display:none" class="auto-deadline-info"></div>
+  </div>
+
+  <!-- Medieplanoversikt opplasting -->
+  <div class="card">
+    <div class="section-label">Last opp medieplan (valgfritt)</div>
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
+         ondragover="event.preventDefault();this.classList.add('drag-over')"
+         ondragleave="this.classList.remove('drag-over')"
+         ondrop="handleDrop(event)">
+      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this.files[0])">
+      <div class="upload-icon">📋</div>
+      <div class="upload-title">Dra og slipp medieplan hit, eller klikk for å velge fil</div>
+      <div class="upload-sub">Støtter CSV og Excel · For best resultat: kolonne «Kanal», «Format», «Start» · Kanaler hakes av automatisk</div>
+    </div>
+    <div class="upload-result" id="upload-result"></div>
   </div>
 
   <!-- Kanaltree -->
@@ -169,87 +212,233 @@ input:focus { border-color: var(--mood-accent1); }
 </div>
 
 <script>
-// ─── KANALDATA ──────────────────────────────────────────────────────────────
+// ─── MATERIELLFRIST PER KANAL (virkedager tilbake fra kampanjestart) ──────────
+// Format: { businessDays: N, calendarDays: null } eller { businessDays: null, calendarDays: N }
+const DEADLINE_RULES = {
+  // Sosiale medier – opplastes av Mood, ingen ekstern leveringsfrist
+  'meta-bilde':       { businessDays: 3,  label:'Opplasting i Meta Ads Manager' },
+  'meta-video':       { businessDays: 3,  label:'Opplasting i Meta Ads Manager' },
+  'tiktok':           { businessDays: 3,  label:'Opplasting i TikTok Ads Manager' },
+  'snapchat-bilde':   { businessDays: 3,  label:'Opplasting i Snapchat Ads Manager' },
+  'snapchat-video':   { businessDays: 3,  label:'Opplasting i Snapchat Ads Manager' },
+  'youtube':          { businessDays: 3,  label:'Via Google Ads' },
+  // Online video
+  'vgtv':             { businessDays: 5,  label:'VAST-tag til Moodgruppen' },
+  'tv2play':          { businessDays: 5,  label:'Via Adtoox/Adstream/Peach' },
+  'allertv':          { businessDays: 5,  label:'Leveres til Moodgruppen' },
+  'azerion':          { businessDays: 5,  label:'VAST-tag eller videofil til Moodgruppen' },
+  // OOH / DOOH
+  'jcd-digital-standard':      { businessDays: 4,  label:'digitalt@jcdecaux.com' },
+  'jcd-eurosize':              { businessDays: 9,  label:'motiv@jcdecaux.com' },
+  'jcd-jernbanetorget-premium':{ businessDays: 4,  label:'digitalt@jcdecaux.com' },
+  'jcd-xtrack':                { businessDays: 4,  label:'digitalt@jcdecaux.com' },
+  'jcd-oslo-s-xxl':            { businessDays: 4,  label:'digitalt@jcdecaux.com' },
+  'bauer-adshel':              { businessDays: 10, label:'campaignmanagement-no@bauermediaoutdoor.com' },
+  'bauer-adshel-flexi':        { businessDays: 10, label:'campaignmanagement-no@bauermediaoutdoor.com' },
+  'bauer-play-adshel':         { businessDays: 4,  label:'campaignmanagement-no@bauermediaoutdoor.com' },
+  'bauer-play-billboard':      { businessDays: 4,  label:'campaignmanagement-no@bauermediaoutdoor.com' },
+  'bauer-play-spectacular':    { businessDays: 4,  label:'campaignmanagement-no@bauermediaoutdoor.com' },
+  // Display
+  'display':          { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
+  // Audio
+  'spotify-podcast':  { businessDays: 5,  label:'Via Spotify Ad Studio' },
+  'acast':            { businessDays: 5,  label:'Via Acast Marketplace' },
+  // Kino
+  'kino-mdn':         { businessDays: 3,  label:'distribusjon@mdn.no' },
+  // TV
+  'linear-tv':        { businessDays: 4,  label:'Via Peach eller Extremereach' },
+  // Print
+  'print-dagspresse': { businessDays: 5,  label:'Via mediebyrå / direkte til publikasjon' },
+  'print-magasin':    { businessDays: 14, label:'Via mediebyrå / direkte til publikasjon' },
+};
+
+function addBusinessDays(date, days) {
+  let d = new Date(date);
+  let added = 0;
+  while (added < days) {
+    d.setDate(d.getDate() - 1);
+    const dow = d.getDay();
+    if (dow !== 0 && dow !== 6) added++;
+  }
+  return d;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('nb-NO', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function getChannelDeadline(id) {
+  const startVal = document.getElementById('f-start').value;
+  if (!startVal) return null;
+  const rule = DEADLINE_RULES[id];
+  if (!rule) return null;
+  const start = new Date(startVal + 'T12:00:00');
+  const deadline = addBusinessDays(start, rule.businessDays);
+  return { date: deadline, formatted: formatDate(deadline), days: rule.businessDays, label: rule.label };
+}
+
+// ─── KANALDATA ───────────────────────────────────────────────────────────────
 const CHANNELS = {
+  /* ─── META BILDE ─── */
   'meta-bilde': {
     name:'Meta – Bilde', color:'#1877F2', cat:'some', sub:'meta',
     hasImage:true, hasVideo:false,
     specs:{ image:{
-      'Format – Feed':'4:5 (1080×1350 px)',
-      'Format – Stories/Reels':'9:16 (1080×1920 px)',
-      'Filformat':'JPG eller PNG', 'Maks filstørrelse':'30 MB', 'Fargemodus':'sRGB'
+      'Feed – Format':'1:1 (1080×1080 px) eller 4:5 (1080×1350 px)',
+      'Stories / Reels – Format':'9:16 (1080×1920 px)',
+      'Filformat':'JPG eller PNG',
+      'Maks filstørrelse':'30 MB',
+      'Min oppløsning':'1080 px bred',
+      'Fargemodus':'sRGB',
     }},
-    safezones:{ image:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
-    postetekst:{ 'Primærtekst (feed)':'Maks 125 tegn anbefalt', 'Overskrift':'Maks 40 tegn', 'Beskrivelse':'Maks 30 tegn' },
+    safezones:{ image:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst og logo.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
+    postetekst:{ 'Primærtekst (feed)':'Anbefalt maks 125 tegn', 'Overskrift':'Maks 40 tegn', 'Beskrivelse':'Maks 30 tegn' },
     leveranse:'Opplastes i Meta Ads Manager av Moodgruppen'
   },
+  /* ─── META VIDEO ─── */
   'meta-video': {
     name:'Meta – Video', color:'#1877F2', cat:'some', sub:'meta',
     hasImage:false, hasVideo:true,
     durations:[6,15,20,30],
     specs:{ video:{
-      'Format':'4:5 (1080×1350 px) og 9:16 (1080×1920 px)',
-      'Filformat':'MP4 eller MOV', 'Maks filstørrelse':'4 GB',
-      'Codec':'H.264, progressiv scan', 'Lyd':'Stereo AAC, min 128 kbps'
+      'Feed – Format':'4:5 (1080×1350 px) anbefalt',
+      'Stories / Reels – Format':'9:16 (1080×1920 px)',
+      'Filformat':'MP4 eller MOV',
+      'Maks filstørrelse':'4 GB',
+      'Codec':'H.264, progressiv scan',
+      'Lydformat':'AAC stereo, min 128 kbps',
+      'Bildefrekvens':'Min 30 fps',
     }},
-    safezones:{ video:'Stories/Reels: topp 250 px og bunn 340 px fri for tekst, logo og viktige elementer.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
-    postetekst:{ 'Primærtekst (feed)':'Maks 125 tegn anbefalt', 'Overskrift':'Maks 40 tegn' },
+    safezones:{ video:'Stories/Reels: topp 250 px og bunn 340 px fri. Feed: bunn 10% bør unngås.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
+    postetekst:{ 'Primærtekst (feed)':'Anbefalt maks 125 tegn', 'Overskrift':'Maks 40 tegn' },
     leveranse:'Opplastes i Meta Ads Manager av Moodgruppen'
   },
+  /* ─── META KARUSELL ─── */
+  'meta-karusell': {
+    name:'Meta – Karusell', color:'#1877F2', cat:'some', sub:'meta',
+    hasImage:true, hasVideo:true,
+    specs:{
+      image:{
+        'Format per kort':'1:1 (1080×1080 px)',
+        'Filformat':'JPG eller PNG',
+        'Maks filstørrelse':'30 MB per kort',
+        'Antall kort':'2–10 kort',
+      },
+      video:{
+        'Format per kort':'1:1 (1080×1080 px)',
+        'Filformat':'MP4 eller MOV',
+        'Maks varighet per kort':'Maks 240 min (anbefalt < 15 sek)',
+        'Antall kort':'2–10 kort',
+      }
+    },
+    safezones:{ image:'Viktig innhold bør holdes innenfor midtre 90%.', link:'https://www.facebook.com/business/help/1593651214426085', label:'Meta safezone-guide' },
+    postetekst:{ 'Primærtekst':'Anbefalt maks 125 tegn', 'Overskrift per kort':'Maks 40 tegn', 'Beskrivelse per kort':'Maks 20 tegn' },
+    leveranse:'Opplastes i Meta Ads Manager av Moodgruppen'
+  },
+  /* ─── TIKTOK ─── */
   'tiktok': {
     name:'TikTok', color:'#010101', cat:'some', sub:'tiktok',
     hasImage:false, hasVideo:true,
-    durations:[6,9,15,30,60],
+    durations:[9,15,30,60],
     specs:{ video:{
-      'Format':'9:16 – 1080×1920 px', 'Filformat':'.mp4 eller .mov',
-      'Maks filstørrelse':'500 MB', 'Min oppløsning':'540×960 px', 'Bitrate':'Min 516 kbps'
+      'Format (anbefalt)':'9:16 – 1080×1920 px',
+      'Støttes også':'1:1 og 16:9',
+      'Filformat':'.mp4 eller .mov',
+      'Maks filstørrelse':'500 MB',
+      'Min oppløsning':'540×960 px (9:16)',
+      'Bitrate':'Min 516 kbps',
+      'Max varighet':'Opptil 10 min (In-Feed) – anbefalt 9–15 sek',
     }},
-    safezones:{ video:'Topp: 108 px · Bunn: 320 px · Venstre: 60 px · Høyre: 120 px', link:'https://ads.tiktok.com/help/article?aid=10002742', label:'TikTok Ads Manager' },
-    postetekst:{ 'Caption':'Maks 4 linjer. Anbefalt: 1 linje.', 'Merknad':'Ingen @-omtaler eller hashtags i Non-Spark ads' },
+    safezones:{ video:'Topp ~10% (profil/notifikasjoner) og bunn ~35% (caption, CTA-knapp) bør være fri.', link:'https://ads.tiktok.com/help/article?aid=10002742', label:'TikTok Ads Manager' },
+    postetekst:{ 'Caption':'Maks 4 linjer. Anbefalt: 1 linje.', 'Merknad':'@, # og klikkbare lenker støttes ikke i Non-Spark ads' },
     leveranse:'Opplastes i TikTok Ads Manager av Moodgruppen'
   },
+  /* ─── SNAPCHAT BILDE ─── */
   'snapchat-bilde': {
     name:'Snapchat – Bilde', color:'#FFCD00', cat:'some', sub:'snapchat',
     hasImage:true, hasVideo:false,
-    specs:{ image:{ 'Format':'9:16 (1080×1920 px)', 'Filformat':'JPG eller PNG', 'Maks filstørrelse':'5 MB' }},
-    safezones:{ image:'Topp 180 px og bunn 180 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
-    postetekst:{ 'Brand name':'Maks 25 tegn', 'Headline':'Maks 34 tegn' },
+    specs:{ image:{
+      'Format':'9:16 (1080×1920 px)',
+      'Filformat':'JPG eller PNG',
+      'Maks filstørrelse':'5 MB',
+    }},
+    safezones:{ image:'Topp 150 px og bunn 150 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
+    postetekst:{ 'Brand name':'Maks 32 tegn (inkl. mellomrom)', 'Headline':'Maks 34 tegn (inkl. mellomrom)' },
     leveranse:'Opplastes i Snapchat Ads Manager av Moodgruppen'
   },
+  /* ─── SNAPCHAT VIDEO ─── */
   'snapchat-video': {
     name:'Snapchat – Video', color:'#FFCD00', cat:'some', sub:'snapchat',
     hasImage:false, hasVideo:true,
     durations:[3,6,10,15],
-    specs:{ video:{ 'Format':'9:16 (1080×1920 px)', 'Filformat':'MP4 eller MOV (H.264)', 'Maks filstørrelse':'1 GB', 'Lyd':'AAC-LC, maks 192 kbps' }},
-    safezones:{ video:'Topp 180 px og bunn 180 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
-    postetekst:{ 'Brand name':'Maks 25 tegn', 'Headline':'Maks 34 tegn' },
+    specs:{ video:{
+      'Format':'9:16 (1080×1920 px)',
+      'Filformat':'MP4 eller MOV (H.264)',
+      'Maks filstørrelse':'1 GB (anbefalt ≤ 32 MB)',
+      'Max varighet':'3–180 sek · anbefalt 3–10 sek',
+      'Lyd':'AAC-LC, maks 192 kbps',
+    }},
+    safezones:{ video:'Topp 150 px og bunn 150 px fri for tekst og logo.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
+    postetekst:{ 'Brand name':'Maks 32 tegn', 'Headline':'Maks 34 tegn' },
     leveranse:'Opplastes i Snapchat Ads Manager av Moodgruppen'
   },
+  /* ─── SNAPCHAT COLLECTION ─── */
+  'snapchat-collection': {
+    name:'Snapchat – Collection', color:'#FFCD00', cat:'some', sub:'snapchat',
+    hasImage:true, hasVideo:true,
+    specs:{
+      image:{
+        'Hero-bilde format':'9:16 (1080×1920 px)',
+        'Produkt-thumbnails':'1:1 (160×160 px min)',
+        'Filformat':'JPG eller PNG',
+        'Maks filstørrelse':'5 MB (hero) · 2 MB (thumbnail)',
+        'Antall thumbnails':'2, 3 eller 4',
+        'Viktig': 'Ikke plasser nøkkelelementer i bunn 450 px (Collection-bar)',
+      },
+      video:{
+        'Hero-video format':'9:16 (1080×1920 px)',
+        'Filformat':'MP4 eller MOV (H.264)',
+        'Maks filstørrelse':'1 GB',
+        'Max varighet':'3–180 sek',
+      }
+    },
+    safezones:{ image:'Bunn 450 px forbeholdt Collection-bar – hold logo og viktige elementer unna.', link:'https://businesshelp.snapchat.com/s/topic/ad-specifications', label:'Snapchat Business Help' },
+    postetekst:{ 'Brand name':'Maks 32 tegn', 'Headline':'Maks 34 tegn' },
+    leveranse:'Opplastes i Snapchat Ads Manager av Moodgruppen'
+  },
+  /* ─── YOUTUBE ─── */
   'youtube': {
     name:'YouTube', color:'#FF0000', cat:'some', sub:'youtube',
     hasImage:false, hasVideo:true,
     durations:[6,15,20,30],
     specs:{ video:{
-      'Format – In-stream':'16:9 (1920×1080 px)', 'Format – Shorts':'9:16 (1080×1920 px)',
-      'Filformat':'.mp4, .mov, .avi, .mpeg, .webm, .wmv', 'Maks filstørrelse':'1 GB',
-      'Lyd':'PCM (anbefalt) eller AAC, 16 eller 24 bit'
+      'Format – In-stream':'16:9 (1920×1080 px)',
+      'Format – Shorts':'9:16 (1080×1920 px)',
+      'Filformat':'.mp4, .mov, .avi, .mpeg, .webm, .wmv',
+      'Maks filstørrelse':'1 GB',
+      'Lyd':'PCM (anbefalt) eller AAC, 16 eller 24 bit',
     }},
     safezones:{ video:'Unngå viktige elementer i nedre 10% (skip-knapp og logooverlay).', link:'https://support.google.com/youtube/answer/1722171', label:'YouTube Help Center' },
     postetekst:{ 'Videotittel':'Maks 100 tegn', 'Beskrivelse':'Maks 5000 tegn' },
     leveranse:'Via Google Ads, administreres av Moodgruppen'
   },
+  /* ─── ONLINE VIDEO ─── */
   'vgtv': {
     name:'VGTV', color:'#E2001A', cat:'onlinevideo', sub:'vgtv',
     hasImage:false, hasVideo:true,
     durations:[10,15,20,30],
     specs:{ video:{
-      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)', 'Filformat':'.mp4',
-      'Maks filstørrelse':'50 MB', 'Videokodek':'H.264 (eller DVCPRO HD)',
+      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)',
+      'Filformat':'.mp4',
+      'Maks filstørrelse':'50 MB',
+      'Videokodek':'H.264 (eller DVCPRO HD)',
       'Oppløsning':'Anbefalt 1080p – min 640×360 px',
       'FPS':'Anbefalt 50 fps · min 25 fps progressiv · maks 60 fps',
-      'Bitrate video':'Min 5 000 kbps', 'Lydformat':'Stereo AAC eller MP3',
+      'Bitrate video':'Min 5 000 kbps',
+      'Lydformat':'Stereo AAC eller MP3',
       'Lydnivå':'–23 LUFS/LKFS (±7) · maks –16 LUFS · min –30 LUFS',
-      'Bitrate lyd':'Min 128 kbps', 'Leveringsformat':'VAST-tag · VPAID må fjernes'
+      'Bitrate lyd':'Min 128 kbps',
+      'Leveringsformat':'VAST-tag · VPAID må fjernes',
     }},
     postetekst:null, leveranse:'VAST-tag leveres til Moodgruppen'
   },
@@ -265,9 +454,13 @@ const CHANNELS = {
     hasImage:false, hasVideo:true,
     durations:[10,15,20,30],
     specs:{ video:{
-      'Format':'16:9 og 9:16', 'Filformat':'.mp4', 'Maks filstørrelse':'512 MB',
-      'Kvalitet':'1080p eller 720p', 'Min oppløsning':'980×551 px',
-      'Videokodek':'H.264, min 1000 kbit/s', 'Lydnivå':'–23 LUFS/LKFS ±1'
+      'Format':'16:9 og 9:16',
+      'Filformat':'.mp4',
+      'Maks filstørrelse':'512 MB',
+      'Kvalitet':'1080p eller 720p',
+      'Min oppløsning':'980×551 px',
+      'Videokodek':'H.264, min 1000 kbit/s',
+      'Lydnivå':'–23 LUFS/LKFS ±1',
     }},
     postetekst:null, leveranse:'Leveres til Moodgruppen'
   },
@@ -276,12 +469,15 @@ const CHANNELS = {
     hasImage:false, hasVideo:true,
     durations:[10,15,20,30],
     specs:{ video:{
-      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)', 'Filformat':'.mp4',
-      'Maks filstørrelse':'200 MB', 'Leveringsformat':'VAST 2.0 eller VAST 3.0 tag',
-      'Alternativt':'Videofil + click URL + (valgfri) impressiontracker'
+      'Format':'16:9 (1920×1080 px) og 9:16 (1080×1920 px)',
+      'Filformat':'.mp4',
+      'Maks filstørrelse':'200 MB',
+      'Leveringsformat':'VAST 2.0 eller VAST 3.0 tag',
+      'Alternativt':'Videofil + click URL + (valgfri) impressiontracker',
     }},
     postetekst:null, leveranse:'VAST-tag eller videofil leveres til Moodgruppen'
   },
+  /* ─── OOH / DOOH ─── */
   'jcd-digital-standard': {
     name:'Digital Standard 9:16', color:'#003087', cat:'ooh', sub:'jcd-digital',
     hasImage:true, hasVideo:true,
@@ -306,7 +502,7 @@ const CHANNELS = {
       image:{ 'Format':'3120×944 px', 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
       video:{ 'Format':'3120×944 px', 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager',
     specLink:'https://jcdecaux.no/specifications/metro/technical-spesifications-metro-jernbanetorget-premium.pdf'
   },
   'jcd-xtrack': {
@@ -316,7 +512,7 @@ const CHANNELS = {
       image:{ 'Format':'1600×1000 px', 'Fysisk størrelse':'400×250 cm (10 m²)', 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
       video:{ 'Format':'1600×1000 px', 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager',
     specLink:'https://jcdecaux.no/specifications/metro/technical-spesifications-metro-x-track-premium.pdf'
   },
   'jcd-oslo-s-xxl': {
@@ -326,17 +522,36 @@ const CHANNELS = {
       image:{ 'Filformat':'JPG', 'Fargemodus':'RGB', 'Oppløsning':'72 ppi' },
       video:{ 'Filformat':'MP4 (H264)', 'Spotlengde':'10 sek', 'Bildefrekvens':'25 fps', 'Bithastighet':'Maks 8 mbit/s' }
     },
-    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager før kampanjestart',
+    postetekst:null, leveranse:'digitalt@jcdecaux.com · Frist: 4 virkedager',
     specLink:'https://jcdecaux.no/specifications/rail/technical-spesifications-rail-oslo-s-xxl.pdf'
   },
   'bauer-adshel': {
     name:'Adshel Classic (statisk)', color:'#004B87', cat:'ooh', sub:'bauer-statisk',
     hasImage:true, hasVideo:false, isBauer:true,
     specs:{ image:{
-      'Format':'1185×1750 mm (fysisk)', 'Synlig område':'1160×1720 mm',
-      'Filformat':'PDF (trykkferdig)', 'Fargemodus':'CMYK – Coated Fogra39',
-      'Oppløsning':'Min 150 dpi', 'Bleed':'Min 3 mm',
-      'Fonter':'Må vektoriseres', 'Filnavn':'Ordrenr_Kunde_Kampanjeuke_Format_Designnr'
+      'Format':'1185×1750 mm (fysisk)',
+      'Synlig område':'1160×1720 mm',
+      'Filformat':'PDF (trykkferdig)',
+      'Fargemodus':'CMYK – Coated Fogra39',
+      'Oppløsning':'Min 150 dpi',
+      'Bleed':'Min 3 mm',
+      'Fonter':'Må vektoriseres',
+      'Filnavn':'Ordrenr_Kunde_Kampanjeuke_Format_Designnr',
+    }},
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: 10 virkedager',
+    specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/adshel'
+  },
+  'bauer-adshel-flexi': {
+    name:'Adshel Flexi (statisk)', color:'#004B87', cat:'ooh', sub:'bauer-statisk',
+    hasImage:true, hasVideo:false, isBauer:true,
+    specs:{ image:{
+      'Format':'1200×1800 mm (fysisk) · alternativt 1080×1920 px',
+      'Filformat':'PDF (trykkferdig) eller JPG/PNG',
+      'Fargemodus':'CMYK – Coated Fogra39',
+      'Oppløsning':'Min 150 dpi',
+      'Bleed':'Min 3 mm',
+      'Fonter':'Må vektoriseres',
+      'Filnavn':'Ordrenr_Kunde_Kampanjeuke_Format_Designnr',
     }},
     postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: 10 virkedager',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/adshel'
@@ -346,9 +561,9 @@ const CHANNELS = {
     hasImage:true, hasVideo:true, isBauer:true,
     specs:{
       image:{ 'Format':'1080×1920 px', 'Filformat':'JPG eller PNG', 'Fargemodus':'RGB, 72 dpi', 'Merknad':'Statisk backup alltid påkrevd' },
-      video:{ 'Format':'1080×1920 px', 'Filformat':'.mov eller .mp4', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet', 'Merknad':'Statisk backup (JPG/PNG) alltid påkrevd' }
+      video:{ 'Format':'1080×1920 px', 'Filformat':'.mov eller .mp4', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8 000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet', 'Merknad':'Statisk backup (JPG/PNG) alltid påkrevd' }
     },
-    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-adshel-programmatic'
   },
   'bauer-play-billboard': {
@@ -356,9 +571,9 @@ const CHANNELS = {
     hasImage:true, hasVideo:true, isBauer:true,
     specs:{
       image:{ 'Format – Jernbanetorget/Byporten':'896×672 px', 'Format – Trondheim torg':'784×384 px', 'Format – City Lade Cube':'1920×1080 px', 'Filformat':'JPG eller PNG, 72 dpi, RGB' },
-      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
+      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8 000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
     },
-    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-billboard-programmatic'
   },
   'bauer-play-spectacular': {
@@ -366,11 +581,12 @@ const CHANNELS = {
     hasImage:true, hasVideo:true, isBauer:true,
     specs:{
       image:{ 'Format – Lagunen':'512×960 px', 'Filformat':'JPG eller PNG, 72 dpi, RGB' },
-      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
+      video:{ 'Filformat':'.mov eller .mp4, RGB, 72 dpi', 'Maks filstørrelse':'30 MB', 'Maks bitrate':'8 000 kB/s (CBR)', 'Maks FPS':'25 fps', 'Spotlengde':'10 sek anbefalt', 'Lyd':'Ikke støttet' }
     },
-    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com · Frist: innen kl 12:00',
+    postetekst:null, leveranse:'campaignmanagement-no@bauermediaoutdoor.com',
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-spectacular-programmatic'
   },
+  /* ─── DISPLAY ─── */
   'display': {
     name:'Programmatisk Display', color:'#FF6B00', cat:'display', sub:'display',
     hasImage:true, hasVideo:true,
@@ -380,6 +596,7 @@ const CHANNELS = {
     },
     postetekst:null, leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
   },
+  /* ─── AUDIO ─── */
   'spotify-podcast': {
     name:'Spotify Podcast', color:'#1DB954', cat:'audio', sub:'podcast',
     hasAudio:true,
@@ -391,9 +608,10 @@ const CHANNELS = {
     name:'Acast', color:'#FF3D57', cat:'audio', sub:'podcast',
     hasAudio:true,
     specs:{ audio:{ 'Filformat':'MP3 (kun MP3)', 'Bitrate':'128–160 kbps anbefalt (CBR)', 'Lydnivå':'Normaliseres til -18 LUFS av Acast', 'Merknad':'Dårlig lydkvalitet kan føre til avvisning' }},
-    postetekst:null, leveranse:'Via Acast Marketplace eller kontakt Acast-salg',
+    postetekst:null, leveranse:'Via Acast Marketplace',
     specLink:'https://learn.acast.com/en/articles/6515297-audio-file-specs'
   },
+  /* ─── KINO ─── */
   'kino-mdn': {
     name:'Kino – Media Direct Norge', color:'#E50914', cat:'kino', sub:'kino',
     hasVideo:true,
@@ -402,6 +620,7 @@ const CHANNELS = {
     postetekst:null, leveranse:'distribusjon@mdn.no · Frist: 3 virkedager før første visningsdag',
     specLink:'https://www.mdn.no/produksjonslink'
   },
+  /* ─── LINEÆR TV ─── */
   'linear-tv': {
     name:'Lineær TV', color:'#1a1a2e', cat:'tv', sub:'linear-tv',
     hasVideo:true,
@@ -409,7 +628,42 @@ const CHANNELS = {
     specs:{ video:{ 'Filformat':'HD (1920×1080) via Peach eller Extremereach', 'Lydnivå':'-23 LUFS (R128 EBU-standard)', 'Nielsen-kode':'Påkrevd – bestilles på filmkode.no', 'Leveringsplattform':'Peach (peach.me) eller Extremereach', 'Merknad':'Adtoox og IMDcloud er nå Peach' }},
     postetekst:null, leveranse:'Via Peach eller Extremereach · Frist: 4 virkedager · Nielsen-kode: filmkode.no',
     specLink:'https://annonsere.tv2.no/tv/reklamefilm'
-  }
+  },
+  /* ─── PRINT ─── */
+  'print-dagspresse': {
+    name:'Dagspresse (avis)', color:'#333333', cat:'print', sub:'print-avis',
+    hasImage:true, hasVideo:false,
+    specs:{ image:{
+      'Filformat':'PDF/X-1a (trykkferdig)',
+      'Fargemodus':'CMYK',
+      'Fargerom':'ISO Coated v2 (Fogra39) for papir, ISO Newspaper 26v4 for newsprint',
+      'Oppløsning':'Min 200 dpi (anbefalt 300 dpi)',
+      'Bleed':'3 mm på alle sider',
+      'Fonter':'Integrert / vektorisert',
+      'Vanlige formater':'Hel side tabloid: 258×370 mm · Halv side horisontal: 258×180 mm · 1/4 side: 126×180 mm · Dobbeltside: 516×370 mm (med 6 mm senter)',
+      'VG (web)':'258×370 mm · Bleed: 264×376 mm',
+      'Aftenposten':'258×370 mm',
+      'Dagbladet':'256×367 mm',
+    }},
+    postetekst:null, leveranse:'Leveres via mediebyrå eller direkte til publikasjon · Sjekk publikasjonens egne spec-ark'
+  },
+  'print-magasin': {
+    name:'Magasin / ukeblad', color:'#7B3FA0', cat:'print', sub:'print-magasin',
+    hasImage:true, hasVideo:false,
+    specs:{ image:{
+      'Filformat':'PDF/X-1a eller PDF/X-4 (trykkferdig)',
+      'Fargemodus':'CMYK',
+      'Fargerom':'ISO Coated v2 300% (Fogra39)',
+      'Oppløsning':'Min 300 dpi',
+      'Bleed':'3–5 mm på alle sider (sjekk publikasjon)',
+      'Fonter':'Integrert / vektorisert',
+      'Vanlige formater (A4)':'Hel side: 210×297 mm · Bleed: 216×303 mm · Trykkflate: 186×267 mm',
+      'Dobbeltside (A4)':'420×297 mm · Bleed: 426×303 mm',
+      'Halvside horisontal':'186×126 mm',
+      'Eksempler':'Se Her og Nå, Vi Over 60, Hjemmet, Allers, Donald – egne spec-ark fra Egmont og Aller',
+    }},
+    postetekst:null, leveranse:'Leveres via mediebyrå eller direkte til forlag · Sjekk publikasjonens egne spec-ark'
+  },
 };
 
 // ─── TRESTRUKTUR ─────────────────────────────────────────────────────────────
@@ -417,9 +671,9 @@ const TREE = [
   {
     id:'some', label:'Sosiale medier', icon:'📱',
     subs:[
-      { id:'meta', label:'Meta (Facebook & Instagram)', channels:['meta-bilde','meta-video'] },
+      { id:'meta', label:'Meta (Facebook & Instagram)', channels:['meta-bilde','meta-video','meta-karusell'] },
       { id:'tiktok', label:'TikTok', channels:['tiktok'] },
-      { id:'snapchat', label:'Snapchat', channels:['snapchat-bilde','snapchat-video'] },
+      { id:'snapchat', label:'Snapchat', channels:['snapchat-bilde','snapchat-video','snapchat-collection'] },
       { id:'youtube', label:'YouTube', channels:['youtube'] }
     ]
   },
@@ -438,7 +692,7 @@ const TREE = [
       { id:'jcd-digital', label:'JCDecaux – Digital', channels:['jcd-digital-standard','jcd-jernbanetorget-premium','jcd-xtrack','jcd-oslo-s-xxl'] },
       { id:'jcd-statisk', label:'JCDecaux – Statisk', channels:['jcd-eurosize'] },
       { id:'bauer-digital', label:'Bauer Media – Digital (Play)', channels:['bauer-play-adshel','bauer-play-billboard','bauer-play-spectacular'] },
-      { id:'bauer-statisk', label:'Bauer Media – Statisk', channels:['bauer-adshel'] }
+      { id:'bauer-statisk', label:'Bauer Media – Statisk', channels:['bauer-adshel','bauer-adshel-flexi'] }
     ]
   },
   {
@@ -451,6 +705,12 @@ const TREE = [
     id:'audio', label:'Podcast / lyd', icon:'🎙️',
     subs:[
       { id:'podcast', label:'Podcast-plattformer', channels:['spotify-podcast','acast'] }
+    ]
+  },
+  {
+    id:'print', label:'Print', icon:'📰',
+    subs:[
+      { id:'print-avis', label:'Dagspresse (avis)', channels:['print-dagspresse'] }
     ]
   },
   {
@@ -467,27 +727,56 @@ const TREE = [
   }
 ];
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
+// ─── KANAL-NØKKELORD FOR MEDIEPLANOVERSIKT ─────────────────────────────────
+const CHANNEL_KEYWORDS = {
+  'meta-bilde': ['meta bilde','facebook bilde','instagram bilde','meta image','fb image'],
+  'meta-video': ['meta video','facebook video','instagram video','fb video','meta film'],
+  'meta-karusell': ['meta karusell','karusell','carousel','facebook carousel'],
+  'tiktok': ['tiktok','tik tok'],
+  'snapchat-bilde': ['snapchat bilde','snap bilde','snapchat image'],
+  'snapchat-video': ['snapchat video','snap video','snapchat film'],
+  'snapchat-collection': ['snapchat collection','snap collection'],
+  'youtube': ['youtube','you tube','yt'],
+  'vgtv': ['vgtv','vg tv'],
+  'tv2play': ['tv2 play','tv 2 play','discovery','discovery+','adtoox','adstream'],
+  'allertv': ['aller tv','allertv'],
+  'azerion': ['azerion','gaming'],
+  'jcd-digital-standard': ['jcd digital','jcdecaux digital','digital standard'],
+  'jcd-eurosize': ['jcd eurosize','jcdecaux statisk','eurosize'],
+  'jcd-jernbanetorget-premium': ['jernbanetorget premium','jernbanetorget'],
+  'jcd-xtrack': ['x-track','xtrack'],
+  'jcd-oslo-s-xxl': ['oslo s xxl','oslo s'],
+  'bauer-adshel': ['bauer adshel','adshel classic','bauer statisk'],
+  'bauer-adshel-flexi': ['adshel flexi','flexi'],
+  'bauer-play-adshel': ['play adshel','bauer play adshel'],
+  'bauer-play-billboard': ['play billboard','bauer billboard'],
+  'bauer-play-spectacular': ['play spectacular','spectacular'],
+  'display': ['display','banner','programmatisk','programmatic','html5'],
+  'spotify-podcast': ['spotify','podcast'],
+  'acast': ['acast'],
+  'print-dagspresse': ['vg','aftenposten','dagbladet','dagspresse','avis','tabloid'],
+  'print-magasin': ['magasin','ukeblad','her og nå','allers','hjemmet','donald'],
+  'kino-mdn': ['kino','cinema','mdn','media direct'],
+  'linear-tv': ['tv2','tvnorge','discovery','lineær tv','linear tv','viasat','wbd','peach','extremereach'],
+};
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
 let sel = {};
 let openCats = {};
 let openSubs = {};
 
-function upd() { renderConfigAndBtn(); }
-
-function toggleCat(id) {
-  openCats[id] = !openCats[id];
+function upd() {
+  updateDeadlineSummary();
+  renderConfigAndBtn();
   renderTree();
 }
 
-function toggleSub(id) {
-  openSubs[id] = !openSubs[id];
-  renderTree();
-}
+function toggleCat(id) { openCats[id] = !openCats[id]; renderTree(); }
+function toggleSub(id) { openSubs[id] = !openSubs[id]; renderTree(); }
 
 function toggleFormat(id) {
-  if (sel[id]) {
-    delete sel[id];
-  } else {
+  if (sel[id]) { delete sel[id]; }
+  else {
     const ch = CHANNELS[id];
     const defaultTypes = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
     sel[id] = { types: defaultTypes, count:'', ordernr:'', durations:[], customDur:'', notes:'' };
@@ -499,7 +788,7 @@ function toggleFormat(id) {
 function toggleType(id, t) {
   const types = sel[id].types;
   const i = types.indexOf(t);
-  if (i>=0) { if(types.length===1) return; sel[id].types = types.filter(x=>x!==t); }
+  if (i >= 0) { if (types.length === 1) return; sel[id].types = types.filter(x => x !== t); }
   else sel[id].types = [...types, t];
   renderConfigAndBtn();
 }
@@ -507,69 +796,221 @@ function toggleType(id, t) {
 function toggleDur(id, d) {
   const durs = sel[id].durations;
   const i = durs.indexOf(d);
-  if (i>=0) sel[id].durations = durs.filter(x=>x!==d);
-  else sel[id].durations = [...durs, d].sort((a,b)=>a-b);
+  if (i >= 0) sel[id].durations = durs.filter(x => x !== d);
+  else sel[id].durations = [...durs, d].sort((a,b) => a - b);
   renderConfigAndBtn();
 }
 
-function setCf(id, field, val) { sel[id][field]=val; renderConfigAndBtn(); }
+function setCf(id, field, val) { sel[id][field] = val; renderConfigAndBtn(); }
 
-// ─── RENDER TREE ─────────────────────────────────────────────────────────────
-function formatRow(id) {
+// ─── AUTO-FRIST SAMMENDRAG ────────────────────────────────────────────────────
+function updateDeadlineSummary() {
+  const el = document.getElementById('deadline-summary');
+  const startVal = document.getElementById('f-start').value;
+  if (!startVal || Object.keys(sel).length === 0) { el.style.display = 'none'; return; }
+  const start = new Date(startVal + 'T12:00:00');
+  const items = Object.keys(sel).map(id => {
+    const dl = getChannelDeadline(id);
+    if (!dl) return null;
+    return `<strong>${CHANNELS[id].name}:</strong> ${dl.formatted} (${dl.days} virkedager)`;
+  }).filter(Boolean);
+  if (items.length === 0) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<strong>📅 Auto-beregnede materiellfrister</strong> basert på kampanjestart <strong>${formatDate(start)}</strong>:<br><br>` + items.join('<br>');
+}
+
+// ─── MEDIEPLANOVERSIKT – STRUKTURERT EXCEL/CSV-PARSING ──────────────────────
+// Moodgruppen-medieplan har typisk kolonner: Kanal / Format / Periode / Budsjett
+// Parsingen prøver kolonnegjenkjenning først, faller tilbake til fritekst-søk.
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('upload-zone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) handleFileUpload(file);
+}
+
+// Parse CSV til rader/kolonner
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  return lines.map(line => {
+    // Støtt semikolon og komma som separator
+    const sep = line.includes(';') ? ';' : ',';
+    return line.split(sep).map(cell => cell.trim().replace(/^["']|["']$/g, ''));
+  });
+}
+
+// Finn kolonneindeks med fuzzy match på kolonnenavn
+function findColIndex(headers, candidates) {
+  const h = headers.map(h => h.toLowerCase());
+  for (const cand of candidates) {
+    const i = h.findIndex(x => x.includes(cand));
+    if (i >= 0) return i;
+  }
+  return -1;
+}
+
+// Finn kanaler fra en celle-verdi
+function matchChannelFromCell(cellValue) {
+  if (!cellValue) return [];
+  const lower = cellValue.toLowerCase();
+  const found = [];
+  for (const [id, keywords] of Object.entries(CHANNEL_KEYWORDS)) {
+    if (keywords.some(kw => lower.includes(kw))) {
+      if (!found.includes(id)) found.push(id);
+    }
+  }
+  return found;
+}
+
+// Prøv å trekke ut dato fra en celle (ISO, norsk eller uke-format)
+function parseDateCell(val) {
+  if (!val) return null;
+  // ISO: 2026-06-01
+  if (/^\d{4}-\d{2}-\d{2}$/.test(val)) return new Date(val + 'T12:00:00');
+  // Norsk: 01.06.2026
+  const norsk = val.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+  if (norsk) return new Date(`${norsk[3]}-${norsk[2].padStart(2,'0')}-${norsk[1].padStart(2,'0')}T12:00:00`);
+  return null;
+}
+
+function handleFileUpload(file) {
+  const result = document.getElementById('upload-result');
+  if (!file) return;
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['xlsx','xls','csv'].includes(ext)) {
+    result.className = 'upload-result error'; result.style.display = 'block';
+    result.innerHTML = '⚠️ Filtype ikke støttet. Last opp .xlsx/.xls eller .csv<br><small>Tips: Lagre Excel-filen som CSV (semikolonseparert) for best resultat</small>'; return;
+  }
+  result.className = 'upload-result'; result.style.display = 'block';
+  result.innerHTML = '⏳ Leser medieplan...';
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const text = ev.target.result;
+      const rows = parseCSV(text);
+      if (rows.length < 2) throw new Error('For få rader');
+
+      const headers = rows[0];
+      // Finn relevante kolonner
+      const kanalCol  = findColIndex(headers, ['kanal','channel','medium','medie','plattform','platform']);
+      const formatCol = findColIndex(headers, ['format','annonsetype','ad type','type']);
+      const startCol  = findColIndex(headers, ['start','fra','from','kampanjestart','dato']);
+      const budCol    = findColIndex(headers, ['budsjett','budget','beløp','spend','cost','kostnad']);
+
+      const found = [];
+      const startDates = [];
+      let parsedRows = 0;
+
+      // STRUKTURERT: hvis vi fant kanal-kolonnen
+      if (kanalCol >= 0) {
+        for (let r = 1; r < rows.length; r++) {
+          const row = rows[r];
+          if (!row[kanalCol]) continue;
+          parsedRows++;
+          // Match kanal-celle
+          const fromKanal = matchChannelFromCell(row[kanalCol]);
+          // Match format-celle i tillegg (mer presist)
+          const fromFormat = formatCol >= 0 ? matchChannelFromCell(row[formatCol]) : [];
+          // Prioriter format-treff over kanal-treff (mer spesifikt)
+          const rowMatches = fromFormat.length ? fromFormat : fromKanal;
+          rowMatches.forEach(id => { if (!found.includes(id)) found.push(id); });
+          // Trekk ut startdato
+          if (startCol >= 0) {
+            const d = parseDateCell(row[startCol]);
+            if (d) startDates.push(d);
+          }
+        }
+      }
+
+      // FALLBACK: fritekst-søk i hele innholdet
+      if (found.length === 0) {
+        const lower = text.toLowerCase();
+        for (const [id, keywords] of Object.entries(CHANNEL_KEYWORDS)) {
+          if (keywords.some(kw => lower.includes(kw)) && !found.includes(id)) found.push(id);
+        }
+      }
+
+      if (found.length === 0) {
+        result.innerHTML = '⚠️ Ingen kjente kanaler funnet. Sjekk at kolonnenavnene er «Kanal», «Format», «Start» o.l., eller velg kanaler manuelt.';
+        result.className = 'upload-result error'; return;
+      }
+
+      // Sett tidligste startdato automatisk hvis felt er tomt
+      if (startDates.length && !document.getElementById('f-start').value) {
+        const earliest = new Date(Math.min(...startDates));
+        document.getElementById('f-start').valueAsDate = earliest;
+      }
+
+      // Aktiver valgte kanaler
+      found.forEach(id => {
+        if (!sel[id]) {
+          const ch = CHANNELS[id];
+          const defaultTypes = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
+          sel[id] = { types: defaultTypes, count:'', ordernr:'', durations:[], customDur:'', notes:'' };
+        }
+        openCats[CHANNELS[id].cat] = true;
+        if (CHANNELS[id].sub) openSubs[CHANNELS[id].sub] = true;
+      });
+
+      const modeStr = kanalCol >= 0 ? `Kolonne «${headers[kanalCol]}» lest (${parsedRows} rader)` : 'Fritekst-søk (legg til kolonne «Kanal» for presis matching)';
+      result.innerHTML = `✅ <strong>${found.length} kanaler funnet</strong>: ${found.map(id => CHANNELS[id].name).join(', ')}<br><small style="color:#555">${modeStr}${startDates.length ? ` · Kampanjestart satt til ${formatDate(new Date(Math.min(...startDates)))}` : ''}</small>`;
+      renderTree();
+      renderConfigAndBtn();
+    } catch(err) {
+      result.innerHTML = '⚠️ Kunne ikke lese filen. Lagre Excel-filen som CSV (semikolonseparert) og prøv igjen.';
+      result.className = 'upload-result error';
+    }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+// ─── RENDER TREE ──────────────────────────────────────────────────────────────
+function formatRow(id, direct) {
   const ch = CHANNELS[id];
   const isChecked = !!sel[id];
-  const typeLabel = ch.hasAudio?'Lyd':ch.hasVideo&&ch.hasImage?'Bilde/Video':ch.hasVideo?'Video':'Bilde';
+  const typeLabel = ch.hasAudio ? 'Lyd' : ch.hasVideo && ch.hasImage ? 'Bilde/Video' : ch.hasVideo ? 'Video' : 'Bilde';
+  const tagColor = ch.hasVideo ? '#e8f4ff' : ch.hasImage ? '#f0fff4' : '#fff8e8';
+  const tagText = ch.hasVideo ? '#1877bb' : ch.hasImage ? '#2a7a4a' : '#8a6000';
   return `
-    <div class="format-row" onclick="toggleFormat('${id}')">
-      <div class="format-checkbox ${isChecked?'checked':''}">  ${isChecked?'&#10003;':''}</div>
+    <div class="format-row${direct?' direct':''}" onclick="toggleFormat('${id}')">
+      <div class="format-checkbox${isChecked?' checked':''}">✓</div>
       <span class="format-dot" style="background:${ch.color}"></span>
       <span class="format-name">${ch.name}</span>
-      <span class="format-sub">${typeLabel}</span>
+      <span class="format-tag" style="background:${tagColor};color:${tagText}">${typeLabel}</span>
     </div>`;
 }
 
-function countSelected(channels) {
-  return channels.filter(id=>sel[id]).length;
-}
+function countSelected(channels) { return channels.filter(id => sel[id]).length; }
 
 function renderTree() {
   document.getElementById('tree').innerHTML = TREE.map(cat => {
     const catOpen = openCats[cat.id];
-    const allChannels = cat.subs.flatMap(s=>s.channels);
+    const allChannels = cat.subs.flatMap(s => s.channels);
     const catCount = countSelected(allChannels);
-
-    // Regn ut om kategorien er "flat":
-    // Flat = alle subs har kun 1 kanal, eller hele kategorien har bare 1 sub
-    // I begge tilfeller viser vi kanalene direkte uten sub-header
     const isFlat = cat.subs.every(s => s.channels.length === 1);
 
     const innerContent = isFlat
-      // FLAT: vis alle kanaler direkte under kategorien, ingen sub-header
-      ? `<div class="tree-formats" style="display:block;border-top:1px solid #f0f0f0">
-          ${allChannels.map(id => formatRow(id)).join('')}
+      ? `<div class="tree-formats" style="display:block">
+          ${allChannels.map(id => formatRow(id, true)).join('')}
         </div>`
-      // FULL TRE: vis sub-headers med egne format-lister
       : cat.subs.map(sub => {
           const subOpen = openSubs[sub.id];
           const subCount = countSelected(sub.channels);
-          const singleChannel = sub.channels.length === 1;
-
-          // Sub med kun 1 kanal: vis direkte som en format-rad uten sub-header
-          if (singleChannel) {
-            return `<div style="border-bottom:1px solid #f8f8f8">
-              ${formatRow(sub.channels[0])}
-            </div>`;
+          if (sub.channels.length === 1) {
+            return `<div style="border-bottom:1px solid #f8f8f8">${formatRow(sub.channels[0], true)}</div>`;
           }
-
-          // Sub med flere kanaler: vis sub-header + utfellbar liste
           return `
-            <div class="tree-sub-header" onclick="toggleSub('${sub.id}')">
-              <span>${sub.label}</span>
-              ${subCount>0?`<span style="background:var(--mood-accent1);color:white;border-radius:10px;padding:1px 7px;font-size:10px;margin-left:6px">${subCount}</span>`:''}
-              <span class="tree-sub-arrow ${subOpen?'open':''}">▶</span>
-            </div>
-            <div class="tree-formats ${subOpen?'open':''}">
-              ${sub.channels.map(id => formatRow(id)).join('')}
+            <div>
+              <div class="tree-sub-header" onclick="toggleSub('${sub.id}')">
+                <span>${sub.label}</span>
+                ${subCount > 0 ? `<span class="tree-sub-count">${subCount}</span>` : ''}
+                <span class="tree-sub-arrow${subOpen?' open':''}">▶</span>
+              </div>
+              <div class="tree-formats${subOpen?' open':''}">
+                ${sub.channels.map(id => formatRow(id)).join('')}
+              </div>
             </div>`;
         }).join('');
 
@@ -577,11 +1018,11 @@ function renderTree() {
       <div class="tree-category">
         <div class="tree-cat-header" onclick="toggleCat('${cat.id}')">
           <span class="tree-cat-icon">${cat.icon}</span>
-          <span>${cat.label}</span>
-          ${catCount>0?`<span style="margin-left:8px;background:var(--mood-accent1);color:white;border-radius:10px;padding:1px 8px;font-size:11px">${catCount}</span>`:''}
-          <span class="tree-cat-arrow ${catOpen?'open':''}">▶</span>
+          <span class="tree-cat-label">${cat.label}</span>
+          ${catCount > 0 ? `<span class="tree-cat-count">${catCount}</span>` : ''}
+          <span class="tree-cat-arrow${catOpen?' open':''}">▶</span>
         </div>
-        <div class="tree-level2 ${catOpen?'open':''}">
+        <div class="tree-level2${catOpen?' open':''}">
           ${innerContent}
         </div>
       </div>`;
@@ -593,75 +1034,83 @@ function renderConfigAndBtn() {
   const ids = Object.keys(sel);
   const card = document.getElementById('config-card');
   const btn = document.getElementById('gen-btn');
-  if (ids.length===0) { card.style.display='none'; btn.disabled=true; return; }
-  card.style.display='block'; btn.disabled=false;
+  updateDeadlineSummary();
+  if (ids.length === 0) { card.style.display = 'none'; btn.disabled = true; return; }
+  card.style.display = 'block'; btn.disabled = false;
 
   document.getElementById('config-list').innerHTML = ids.map(id => {
     const ch = CHANNELS[id];
     const cfg = sel[id];
     const durationOptions = ch.durations || [];
+    const dl = getChannelDeadline(id);
+    const dlBadge = dl ? `<span class="config-deadline">Frist: ${dl.formatted}</span>` : '';
 
     return `<div class="config-block">
       <div class="config-head">
         <div class="config-name">
           <span style="width:10px;height:10px;border-radius:50%;background:${ch.color};display:inline-block"></span>
           ${ch.name}
+          ${dlBadge}
         </div>
         <button class="remove-btn" onclick="toggleFormat('${id}')">Fjern</button>
       </div>
       <div class="config-body">
-        ${ch.hasImage&&ch.hasVideo?`
+        ${ch.hasImage && ch.hasVideo ? `
           <div style="margin-bottom:10px">
             <label style="margin-bottom:6px">Kreativtype</label>
             <div class="type-toggles">
-              <button class="type-btn ${cfg.types.includes('image')?'on':''}" onclick="toggleType('${id}','image')">Bilde</button>
-              <button class="type-btn ${cfg.types.includes('video')?'on':''}" onclick="toggleType('${id}','video')">Film / Video</button>
+              <button class="type-btn${cfg.types.includes('image')?' on':''}" onclick="toggleType('${id}','image')">Bilde</button>
+              <button class="type-btn${cfg.types.includes('video')?' on':''}" onclick="toggleType('${id}','video')">Film / Video</button>
             </div>
-          </div>`:''}
-
-        ${durationOptions.length>0?`
+          </div>` : ''}
+        ${durationOptions.length > 0 ? `
           <div class="duration-section">
             <div class="duration-label">Sekundlengder (velg alle aktuelle)</div>
             <div class="duration-pills">
-              ${durationOptions.map(d=>`
-                <div class="dur-pill ${cfg.durations.includes(d)?'selected':''}" onclick="toggleDur('${id}',${d})">
+              ${durationOptions.map(d => `
+                <div class="dur-pill${cfg.durations.includes(d)?' selected':''}" onclick="toggleDur('${id}',${d})">
                   <span class="dur-num">${d}</span>
                   <span class="dur-unit">sek</span>
                 </div>`).join('')}
             </div>
-            <div class="dur-custom" style="margin-top:8px">
-              <input placeholder="Annen lengde, f.eks. 45 sek" value="${cfg.customDur||''}" oninput="setCf('${id}','customDur',this.value)" style="width:200px;font-size:12px;padding:5px 9px">
+            <div class="dur-custom">
+              <input type="text" placeholder="Annen lengde, f.eks. 45 sek" value="${cfg.customDur||''}" oninput="setCf('${id}','customDur',this.value)">
             </div>
-          </div>`:''}
-
+          </div>` : ''}
         <div class="mini-row" style="margin-top:10px">
-          ${!ch.hasAudio?`<div class="mini-field"><label>Antall kreativer</label><input value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>`:''}
-          ${ch.isBauer?`<div class="mini-field"><label>Ordrenummer</label><input value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordernr',this.value)"></div>`:''}
-          <div class="mini-field" style="flex:2"><label>Merknad</label><input value="${cfg.notes}" placeholder="Særlige krav, varianter..." oninput="setCf('${id}','notes',this.value)"></div>
+          ${!ch.hasAudio ? `<div class="mini-field"><label>Antall kreativer</label><input type="text" value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>` : ''}
+          ${ch.isBauer ? `<div class="mini-field"><label>Ordrenummer</label><input type="text" value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordernr',this.value)"></div>` : ''}
+          <div class="mini-field" style="flex:2"><label>Merknad</label><input type="text" value="${cfg.notes}" placeholder="Særlige krav, varianter..." oninput="setCf('${id}','notes',this.value)"></div>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-// ─── BUILD PDF ────────────────────────────────────────────────────────────────
+// ─── BUILD PDF ─────────────────────────────────────────────────────────────────
 function specRows(obj) {
-  return Object.entries(obj).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  return Object.entries(obj).map(([k,v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
 }
-
 function now() {
-  return new Date().toLocaleDateString('nb-NO',{day:'2-digit',month:'long',year:'numeric'});
+  return new Date().toLocaleDateString('nb-NO', { day:'2-digit', month:'long', year:'numeric' });
 }
 
 function getOpenItems() {
   const items = [];
   const ids = Object.keys(sel);
-  if (ids.includes('meta-video')||ids.includes('meta-bilde')) items.push('Meta: Bekreft antall kreativer per format (min 3 anbefalt for Advantage+)');
-  ids.filter(id=>CHANNELS[id].isBauer).forEach(id=>{ if(!sel[id].ordernr) items.push(`${CHANNELS[id].name}: Ordrenummer mangler – påkrevd for direkteleveranse`); });
+  if (ids.includes('meta-video') || ids.includes('meta-bilde')) items.push('Meta: Bekreft antall kreativer per format (min 3 anbefalt for Advantage+)');
+  ids.filter(id => CHANNELS[id].isBauer).forEach(id => {
+    if (!sel[id].ordernr) items.push(`${CHANNELS[id].name}: Ordrenummer mangler – påkrevd for direkteleveranse`);
+  });
   if (ids.includes('display')) items.push('Display: Avklar om mp4 leveres via 3. part, og om fallback er jpg eller mp4');
   if (ids.includes('vgtv')) items.push('VGTV: Bekreft at VAST-tag er satt opp uten VPAID');
   if (ids.includes('azerion')) items.push('Azerion: Velg leveringsmetode – VAST-tag eller videofil + click URL');
-  if (ids.some(id=>['meta-bilde','meta-video','tiktok','snapchat-bilde','snapchat-video'].includes(id))) items.push('Postetekster: Avklar hvem som leverer tekster – Moodgruppen eller klient');
+  if (ids.some(id => ['meta-bilde','meta-video','meta-karusell','tiktok','snapchat-bilde','snapchat-video','snapchat-collection'].includes(id))) {
+    items.push('Postetekster: Avklar hvem som leverer tekster – Moodgruppen eller klient');
+  }
+  if (ids.includes('print-dagspresse')) {
+    items.push('Print: Sjekk publikasjonens egne spec-ark for nøyaktige mål og tekniske krav (VG, Aftenposten, Dagbladet har egne maler)');
+  }
   return items;
 }
 
@@ -669,44 +1118,49 @@ function buildPDF() {
   const ids = Object.keys(sel);
   const client = document.getElementById('f-client').value;
   const campaign = document.getElementById('f-campaign').value;
-  const deadline = document.getElementById('f-deadline').value;
+  const startVal = document.getElementById('f-start').value;
+  const endVal = document.getElementById('f-end').value;
   const agency = document.getElementById('f-agency').value;
   const contact = document.getElementById('f-contact').value;
+
+  let periodeStr = '';
+  if (startVal && endVal) periodeStr = `${formatDate(new Date(startVal+'T12:00:00'))} – ${formatDate(new Date(endVal+'T12:00:00'))}`;
+  else if (startVal) periodeStr = `Fra ${formatDate(new Date(startVal+'T12:00:00'))}`;
 
   const blocks = ids.map(id => {
     const ch = CHANNELS[id];
     const cfg = sel[id];
+    const dl = getChannelDeadline(id);
     let sections = '';
 
-    const allTypes = cfg.types.length ? cfg.types : (ch.hasAudio?['audio']:ch.hasVideo?['video']:['image']);
+    const allTypes = cfg.types.length ? cfg.types : (ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image']);
     allTypes.forEach(t => {
       const specs = ch.specs[t];
       if (!specs) return;
-      const label = t==='image'?'Bilde':t==='audio'?'Lyd / Audio':'Film / Video';
+      const label = t === 'image' ? 'Bilde' : t === 'audio' ? 'Lyd / Audio' : 'Film / Video';
       sections += `
         <div class="spec-group">
           <div class="spec-group-title">${label}</div>
           <table class="spec-tbl">
             ${specRows(specs)}
-            ${cfg.count?`<tr><td>Antall kreativer</td><td>${cfg.count}</td></tr>`:''}
+            ${cfg.count ? `<tr><td>Antall kreativer</td><td>${cfg.count}</td></tr>` : ''}
           </table>
-          ${ch.safezones&&ch.safezones[t]?`
+          ${ch.safezones && ch.safezones[t] ? `
           <div class="safezone-box">
             <strong>Safezone:</strong> ${ch.safezones[t]}
-            ${ch.safezones.link?` &nbsp;→ <a href="${ch.safezones.link}" target="_blank">${ch.safezones.label}</a>`:''}
-          </div>`:''}
+            ${ch.safezones.link ? ` &nbsp;→ <a href="${ch.safezones.link}" target="_blank">${ch.safezones.label}</a>` : ''}
+          </div>` : ''}
         </div>`;
     });
 
-    // Sekundlengder
     const durList = [...cfg.durations];
     if (cfg.customDur) durList.push(cfg.customDur);
-    if (durList.length>0) {
+    if (durList.length > 0) {
       sections += `
         <div class="spec-group">
           <div class="spec-group-title">Sekundlengder</div>
           <div class="duration-badge">
-            ${durList.map(d=>`<span class="dur-badge-item">${typeof d==='number'?d+' sek':d}</span>`).join('')}
+            ${durList.map(d => `<span class="dur-badge-item">${typeof d==='number'?d+' sek':d}</span>`).join('')}
           </div>
         </div>`;
     }
@@ -719,15 +1173,16 @@ function buildPDF() {
         </div>`;
     }
 
-    const leveranseVal = ch.isBauer&&cfg.ordernr ? `${ch.leveranse}<br><strong>Ordrenummer: ${cfg.ordernr}</strong>` : ch.leveranse;
+    const deadlineStr = dl ? dl.formatted : '';
+    const leveranseVal = ch.isBauer && cfg.ordernr ? `${ch.leveranse}<br><strong>Ordrenummer: ${cfg.ordernr}</strong>` : ch.leveranse;
     sections += `
       <div class="spec-group">
         <div class="spec-group-title">Leveranse</div>
         <table class="spec-tbl">
           <tr><td>Leveres til</td><td>${leveranseVal}</td></tr>
-          ${deadline?`<tr><td>Deadline</td><td style="color:#FEA528;font-weight:700">${deadline}</td></tr>`:''}
-          ${cfg.notes?`<tr><td>Merknad</td><td>${cfg.notes}</td></tr>`:''}
-          ${ch.specLink?`<tr><td>Offisiell spec</td><td><a href="${ch.specLink}" target="_blank" style="color:#585FFF">${ch.specLink}</a></td></tr>`:''}
+          ${deadlineStr ? `<tr><td>Materiellfrist</td><td style="color:#c46a00;font-weight:700">${deadlineStr}${dl ? ` (${dl.days} virkedager)` : ''}</td></tr>` : ''}
+          ${cfg.notes ? `<tr><td>Merknad</td><td>${cfg.notes}</td></tr>` : ''}
+          ${ch.specLink ? `<tr><td>Offisiell spec</td><td><a href="${ch.specLink}" target="_blank" style="color:var(--mood-accent1)">${ch.specLink}</a></td></tr>` : ''}
         </table>
       </div>`;
 
@@ -736,7 +1191,8 @@ function buildPDF() {
         <div class="ch-block-head" style="background:${ch.color}15;border-left:3px solid ${ch.color}">
           <span style="width:11px;height:11px;border-radius:50%;background:${ch.color};display:inline-block"></span>
           ${ch.name}
-          <span class="ch-block-sub">– ${ch.cat==='ooh'?'OOH/DOOH':ch.cat==='some'?'Sosiale medier':ch.cat==='onlinevideo'?'Online video':ch.cat}</span>
+          <span class="ch-block-sub">– ${ch.cat==='ooh'?'OOH/DOOH':ch.cat==='some'?'Sosiale medier':ch.cat==='onlinevideo'?'Online video':ch.cat==='print'?'Print':ch.cat}</span>
+          ${deadlineStr ? `<span class="ch-block-deadline">Frist: ${deadlineStr}</span>` : ''}
         </div>
         <div class="ch-block-body">${sections}</div>
       </div>`;
@@ -748,26 +1204,26 @@ function buildPDF() {
       <div class="pdf-header">
         <div>
           <div class="pdf-title">Materiellspesifikasjon</div>
-          <div class="pdf-sub">${campaign||'–'}</div>
-          ${deadline?`<div class="deadline-badge">Deadline: ${deadline}</div>`:''}
+          <div class="pdf-sub">${campaign || '–'}</div>
+          ${periodeStr ? `<div class="deadline-badge">📅 ${periodeStr}</div>` : ''}
         </div>
         <div class="pdf-meta">
-          ${client?`<div class="pdf-meta-item"><strong>Klient:</strong> ${client}</div>`:''}
-          ${agency?`<div class="pdf-meta-item"><strong>Til:</strong> ${agency}</div>`:''}
-          ${contact?`<div class="pdf-meta-item"><strong>Kontakt:</strong> ${contact}</div>`:''}
+          ${client ? `<div class="pdf-meta-item"><strong>Klient:</strong> ${client}</div>` : ''}
+          ${agency ? `<div class="pdf-meta-item"><strong>Til:</strong> ${agency}</div>` : ''}
+          ${contact ? `<div class="pdf-meta-item"><strong>Kontakt:</strong> ${contact}</div>` : ''}
           <div class="pdf-meta-item"><strong>Fra:</strong> Moodgruppen</div>
           <div class="pdf-meta-item">${now()}</div>
         </div>
       </div>
       ${blocks}
-      ${openItems.length>0?`
+      ${openItems.length > 0 ? `
       <div class="open-box">
         <div class="open-box-title">Åpne punkter for avklaring</div>
-        ${openItems.map(i=>`<div class="open-item">${i}</div>`).join('')}
-      </div>`:''}
+        ${openItems.map(i => `<div class="open-item">${i}</div>`).join('')}
+      </div>` : ''}
       <div class="pdf-footer">
-        <span style="font-weight:600;color:#585FFF;letter-spacing:0.04em">MOODGRUPPEN</span>
-        <span>Materiellspesifikasjon · Safezones fra offisielle kilder · ${now()}</span>
+        <span style="font-weight:700;color:var(--mood-accent1);letter-spacing:0.04em">MOODGRUPPEN</span>
+        <span>Materiellspesifikasjon · Offisielle specs · ${now()}</span>
       </div>
     </div>`;
 }
@@ -777,7 +1233,7 @@ function generate() {
   area.innerHTML = `
     <div class="preview-wrap">
       <div class="preview-bar">
-        <span class="preview-label">Forhåndsvisning</span>
+        <span class="preview-label">Forhåndsvisning – klar til utskrift / PDF</span>
         <button class="print-btn" onclick="window.print()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
           Skriv ut / Lagre PDF
@@ -785,10 +1241,9 @@ function generate() {
       </div>
       ${buildPDF()}
     </div>`;
-  area.scrollIntoView({behavior:'smooth', block:'start'});
+  area.scrollIntoView({ behavior:'smooth', block:'start' });
 }
 
-// Init
 renderTree();
 </script>
 </body>
