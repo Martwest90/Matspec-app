@@ -167,6 +167,27 @@ input:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,9
 .next-btn:hover { background: #3a41cc; }
 .next-btn:disabled { background: #ccc; cursor: not-allowed; }
 
+/* ── SØKEFELT ─── */
+.tree-search-wrap { position: relative; margin-bottom: 12px; }
+.tree-search { width: 100%; padding: 9px 12px 9px 36px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; background: white; color: var(--mood-dark); outline: none; transition: border-color 0.15s; }
+.tree-search:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,95,255,0.1); }
+.tree-search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--mood-secondary); font-size: 14px; pointer-events: none; }
+.tree-no-results { text-align: center; padding: 20px; color: var(--mood-secondary); font-size: 13px; }
+
+/* ── VELG ALLE ─── */
+.select-all-btn { font-size: 10px; padding: 2px 8px; border: 1px solid var(--border); border-radius: 10px; cursor: pointer; background: white; color: var(--mood-secondary); margin-left: 6px; transition: all 0.1s; white-space: nowrap; }
+.select-all-btn:hover { border-color: var(--mood-accent1); color: var(--mood-accent1); }
+
+/* ── KOLLAPSBARE CONFIG-BLOKKER ─── */
+.config-toggle { background: none; border: none; cursor: pointer; padding: 0 4px; color: var(--mood-secondary); font-size: 11px; transition: transform 0.2s; display: flex; align-items: center; }
+.config-toggle.open { transform: rotate(180deg); }
+.config-body-wrap { overflow: hidden; transition: max-height 0.25s ease; }
+.config-body-wrap.collapsed { max-height: 0 !important; }
+
+/* ── TREE KATEGORI-FARGEINDIKATOR ─── */
+.tree-cat-header { border-left: 3px solid transparent; }
+.tree-category.has-selection > .tree-cat-header { border-left-color: var(--mood-accent1); }
+
 @media print {
   body { background: white; }
   header, .step2-header, .main > *:not(#step3) { display: none !important; }
@@ -240,6 +261,10 @@ input:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,9
 
     <div class="card">
       <div class="section-label">Velg kanaler og formater</div>
+      <div class="tree-search-wrap">
+        <span class="tree-search-icon">🔍</span>
+        <input type="text" class="tree-search" id="tree-search" placeholder="Søk etter kanal eller format..." oninput="filterTree(this.value)">
+      </div>
       <div id="tree"></div>
     </div>
 
@@ -320,7 +345,12 @@ const DEADLINE_RULES = {
   // Display
   'display-bilde':    { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
   'display-video':    { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
-  // Audio
+  // Radio spots
+  'p4-radio':         { businessDays: 2,  label:'p4marked.no – kl. 12:00' },
+  'bauer-radio':      { businessDays: 2,  label:'bauermedia.no/last-opp-fil – kl. 12:00' },
+  'bauer-audiostream':{ businessDays: 5,  label:'Avklar med Bauer Media' },
+  'moderne-media':    { businessDays: 7,  label:'Kontakt Moderne Media direkte' },
+  // Podcast-plattformer
   'spotify-podcast':  { businessDays: 5,  label:'Via Spotify Ad Studio' },
   'acast':            { businessDays: 5,  label:'Via Acast Marketplace' },
   // Kino
@@ -694,7 +724,67 @@ const CHANNELS = {
     }},
     postetekst:null, leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
   },
-  /* ─── AUDIO ─── */
+  /* ─── AUDIO / LYD ─── */
+  'p4-radio': {
+    name:'P4-gruppen (radio)', color:'#E4002B', cat:'audio', sub:'radio-spots',
+    hasAudio:true,
+    specs:{ audio:{
+      'Filformat':'WAV – PCM Lineær stereo, 48 kHz, 16 bit',
+      'Alternativt format':'44,1 kHz aksepteres ved behov',
+      'Lydnivå':'–23 LUFS (= 0 LU) målt over hele spottens lengde',
+      'Tillatt variasjon':'±0,5 LU',
+      'Maks nivå':'–1 dBTP (Maximum Permitted True Peak Level)',
+      'Max Short Term Loudness':'–18 LUFS (+5 LU)',
+      'Avslutning':'Ca. 0,5 sek stillhet på slutten (regnes ikke med i spotlengden)',
+      'Nielsen-kode':'Påkrevd – bestilles via radiospot@nielsen.com',
+      'Kanaler':'P4, P5 Hits og øvrige P4-kanaler',
+    }},
+    postetekst:null,
+    leveranse:'Last opp via p4marked.no → kontakt planning@p4.no for tilgang · Frist: 2 virkedager før kampanjestart',
+    specLink:'https://www.p4marked.no/annonser-hos-oss/slik-laster-du-opp-reklamespotter-til-oss/artikkel/821243/'
+  },
+  'bauer-radio': {
+    name:'Bauer Media (radio)', color:'#FF6A00', cat:'audio', sub:'radio-spots',
+    hasAudio:true,
+    specs:{ audio:{
+      'Filformat':'WAV – PCM Linear stereo, 16 bit, 48 kHz',
+      'Lydnivå':'–23 LUFS (EBU R128) – bransjepraksis, avklar med Bauer',
+      'Spotmerking':'Kundenavn · kampanjenavn · kampanjeperiode · spotnavn · spotkode · spotrotasjon · sekundlengde',
+      'Kanaler':'Radio Norge, Radio Rock, Radio Topp 40, Radio Vinyl, Radio Norsk Pop, Kiss, P24-7 MIX m.fl.',
+    }},
+    postetekst:null,
+    leveranse:'Last opp via bauermedia.no/last-opp-fil · Frist: kl. 12:00, 2 virkedager før kampanjestart',
+    specLink:'https://www.bauermedia.no/last-opp-fil/'
+  },
+  'bauer-audiostream': {
+    name:'Bauer Audiostream (digital lyd)', color:'#FF6A00', cat:'audio', sub:'digital-lyd',
+    hasAudio:true,
+    specs:{ audio:{
+      'Plattform':'Bauer Audiostream / audioXi – digital lydannonsering',
+      'Innhold':'Podkast, strømmede radiokanaler, musikkstrømming',
+      'Kjøpsform':'Direkte eller programmatisk (via audioXi)',
+      'Filformat':'MP3 eller WAV – avklar med Bauer ved bestilling',
+      'Lydnivå':'Avklar med Bauer – typisk –23 LUFS (EBU R128)',
+      'Merknad':'Ingen offentlig spec-side – spesifikasjoner avklares per kampanje',
+    }},
+    postetekst:null,
+    leveranse:'Kontakt Bauer Media: hei@bauermedia.no · Programmatisk via audioXi-plattformen',
+    specLink:'https://bauermedia.no/annonseprodukter/'
+  },
+  'moderne-media': {
+    name:'Moderne Media (podcast)', color:'#2C2C2C', cat:'audio', sub:'podcast',
+    hasAudio:true,
+    specs:{ audio:{
+      'Annonseformat':'Innholdsmarkedsføring (host-read) eller sponsorat',
+      'Produksjon':'Moderne Media produserer innslaget – kunden leverer brief og godkjenner manus',
+      'Teknisk leveranse':'Ingen lydfil leveres fra kunden – Moderne Media håndterer produksjon',
+      'Varighet':'Pre-roll: 15–30 sek · Sponsorat: 10–20 sek · Mid-roll: 30–60 sek (avhenger av program)',
+      'Merknad':'Ikke en teknisk materialspesifikasjon – levering avtales direkte med Moderne Media',
+    }},
+    postetekst:null,
+    leveranse:'Kontakt Moderne Media: kontakt@modernemedia.no · Avklar format og leveringstid per program',
+    specLink:'https://www.modernemedia.no/annonsere'
+  },
   'spotify-podcast': {
     name:'Spotify Podcast', color:'#1DB954', cat:'audio', sub:'podcast',
     hasAudio:true,
@@ -800,9 +890,11 @@ const TREE = [
     ]
   },
   {
-    id:'audio', label:'Podcast / lyd', icon:'🎙️',
+    id:'audio', label:'Radio, podcast og digital lyd', icon:'🎙️',
     subs:[
-      { id:'podcast', label:'Podcast-plattformer', channels:['spotify-podcast','acast'] }
+      { id:'radio-spots', label:'Radiospotter', channels:['p4-radio','bauer-radio'] },
+      { id:'digital-lyd', label:'Digital lyd / Audiostream', channels:['bauer-audiostream'] },
+      { id:'podcast', label:'Podcast-plattformer', channels:['moderne-media','spotify-podcast','acast'] }
     ]
   },
   {
@@ -851,6 +943,10 @@ const CHANNEL_KEYWORDS = {
   'bauer-play-spectacular': ['play spectacular','spectacular'],
   'display-bilde': ['display bilde','banner bilde','html5','display statisk'],
   'display-video': ['display video','display film','video banner','display mp4'],
+  'p4-radio': ['p4','p4 radio','p5','p5 hits','p4-gruppen','radio p4'],
+  'bauer-radio': ['bauer radio','radio norge','radio rock','radio topp','bauer lyd','bauer spot'],
+  'bauer-audiostream': ['audiostream','audioxi','bauer digital lyd','bauer podcast'],
+  'moderne-media': ['moderne media','modernemedia'],
   'spotify-podcast': ['spotify','podcast'],
   'acast': ['acast'],
   'print-dagspresse': ['vg','aftenposten','dagbladet','dagspresse','avis','tabloid'],
@@ -904,6 +1000,46 @@ function buildAndShowPreview() {
       </div>
       ${buildPDF()}
     </div>`;
+}
+
+// ─── SØKEFILTER ──────────────────────────────────────────────────────────────
+let searchQuery = '';
+
+function filterTree(q) {
+  searchQuery = q.toLowerCase().trim();
+  renderTree();
+}
+
+// ─── VELG ALLE I EN SUB ───────────────────────────────────────────────────────
+function selectAll(channels, e) {
+  e.stopPropagation();
+  const allSelected = channels.every(id => sel[id]);
+  if (allSelected) {
+    channels.forEach(id => { delete sel[id]; });
+  } else {
+    channels.forEach(id => {
+      if (!sel[id]) {
+        const ch = CHANNELS[id];
+        const defaultTypes = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
+        const autoDurs = (ch.hasVideo && !ch.hasImage && ch.durations && ch.durations.length > 0)
+          ? [ch.durations[0]] : [];
+        sel[id] = { types: defaultTypes, count:'', ordernr:'', durations: autoDurs, customDur:'', notes:'', adtext:'', headline:'', url:'' };
+      }
+    });
+  }
+  renderTree();
+  renderConfigAndBtn();
+}
+
+// ─── KOLLAPSBAR CONFIG ────────────────────────────────────────────────────────
+let collapsedConfigs = {};
+
+function toggleConfigCollapse(id) {
+  collapsedConfigs[id] = !collapsedConfigs[id];
+  const wrap = document.getElementById('cfg-body-' + id);
+  if (wrap) wrap.classList.toggle('collapsed', collapsedConfigs[id]);
+  const btn = document.getElementById('cfg-toggle-' + id);
+  if (btn) btn.classList.toggle('open', !collapsedConfigs[id]);
 }
 
 function upd() {
@@ -1141,20 +1277,35 @@ function formatRow(id, direct) {
 
 function countSelected(channels) { return channels.filter(id => sel[id]).length; }
 
-function renderTree() {
-  document.getElementById('tree').innerHTML = TREE.map(cat => {
-    const catOpen = openCats[cat.id];
-    const allChannels = cat.subs.flatMap(s => s.channels);
-    const catCount = countSelected(allChannels);
-    const isFlat = cat.subs.every(s => s.channels.length === 1);
+function channelMatchesSearch(id) {
+  if (!searchQuery) return true;
+  const ch = CHANNELS[id];
+  const haystack = (ch.name + ' ' + (ch.cat||'') + ' ' + (ch.sub||'')).toLowerCase();
+  return haystack.includes(searchQuery);
+}
 
-    const innerContent = isFlat
+function renderTree() {
+  const searching = !!searchQuery;
+  const catHtml = TREE.map(cat => {
+    const allChannels = cat.subs.flatMap(s => s.channels);
+    // Filtrer kanaler ved søk
+    const visibleChannels = searching ? allChannels.filter(channelMatchesSearch) : allChannels;
+    if (searching && visibleChannels.length === 0) return '';
+
+    const catOpen = searching ? true : openCats[cat.id];
+    const catCount = countSelected(allChannels);
+    const isFlat = !searching && cat.subs.every(s => s.channels.length === 1);
+
+    const innerContent = (isFlat || searching)
       ? `<div class="tree-formats" style="display:block">
-          ${allChannels.map(id => formatRow(id, true)).join('')}
+          ${visibleChannels.map(id => formatRow(id, true)).join('')}
         </div>`
       : cat.subs.map(sub => {
+          const subChannels = searching ? sub.channels.filter(channelMatchesSearch) : sub.channels;
+          if (subChannels.length === 0) return '';
           const subOpen = openSubs[sub.id];
           const subCount = countSelected(sub.channels);
+          const allSubSelected = sub.channels.length > 1 && sub.channels.every(id => sel[id]);
           if (sub.channels.length === 1) {
             return `<div style="border-bottom:1px solid #f8f8f8">${formatRow(sub.channels[0], true)}</div>`;
           }
@@ -1163,16 +1314,18 @@ function renderTree() {
               <div class="tree-sub-header" onclick="toggleSub('${sub.id}')">
                 <span>${sub.label}</span>
                 ${subCount > 0 ? `<span class="tree-sub-count">${subCount}</span>` : ''}
+                <button class="select-all-btn" onclick="selectAll(${JSON.stringify(sub.channels)},event)"
+                  title="${allSubSelected?'Fjern alle':'Velg alle'}">${allSubSelected?'Fjern alle':'Velg alle'}</button>
                 <span class="tree-sub-arrow${subOpen?' open':''}">▶</span>
               </div>
               <div class="tree-formats${subOpen?' open':''}">
-                ${sub.channels.map(id => formatRow(id)).join('')}
+                ${subChannels.map(id => formatRow(id)).join('')}
               </div>
             </div>`;
         }).join('');
 
     return `
-      <div class="tree-category">
+      <div class="tree-category${catCount>0?' has-selection':''}">
         <div class="tree-cat-header" onclick="toggleCat('${cat.id}')">
           <span class="tree-cat-icon">${cat.icon}</span>
           <span class="tree-cat-label">${cat.label}</span>
@@ -1183,7 +1336,10 @@ function renderTree() {
           ${innerContent}
         </div>
       </div>`;
-  }).join('');
+  }).filter(Boolean).join('');
+
+  document.getElementById('tree').innerHTML = catHtml ||
+    `<div class="tree-no-results">Ingen kanaler funnet for «${searchQuery}»</div>`;
 }
 
 // ─── RENDER CONFIG ────────────────────────────────────────────────────────────
@@ -1212,14 +1368,18 @@ function renderConfigAndBtn() {
     const dlBadge = dl ? `<span class="config-deadline">Frist: ${dl.formatted}</span>` : '';
 
     return `<div class="config-block">
-      <div class="config-head">
+      <div class="config-head" onclick="toggleConfigCollapse('${id}')" style="cursor:pointer">
         <div class="config-name">
           <span style="width:10px;height:10px;border-radius:50%;background:${ch.color};display:inline-block"></span>
           ${ch.name}
           ${dlBadge}
         </div>
-        <button class="remove-btn" onclick="toggleFormat('${id}')">Fjern</button>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button class="config-toggle open" id="cfg-toggle-${id}" title="Vis/skjul konfig">▲</button>
+          <button class="remove-btn" onclick="event.stopPropagation();toggleFormat('${id}')">Fjern</button>
+        </div>
       </div>
+      <div class="config-body-wrap" id="cfg-body-${id}" style="max-height:600px">
       <div class="config-body">
         ${ch.hasImage && ch.hasVideo ? `
           <div style="margin-bottom:10px">
@@ -1268,6 +1428,7 @@ function renderConfigAndBtn() {
             </div>
           </div>
         </div>` : ''}
+      </div>
       </div>
     </div>`;
   }).join('');
