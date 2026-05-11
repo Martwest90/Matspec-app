@@ -239,7 +239,8 @@ const DEADLINE_RULES = {
   'bauer-play-billboard':      { businessDays: 4,  label:'campaignmanagement-no@bauermediaoutdoor.com' },
   'bauer-play-spectacular':    { businessDays: 4,  label:'campaignmanagement-no@bauermediaoutdoor.com' },
   // Display
-  'display':          { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
+  'display-bilde':    { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
+  'display-video':    { businessDays: 5,  label:'Avklar adserver med Moodgruppen' },
   // Audio
   'spotify-podcast':  { businessDays: 5,  label:'Via Spotify Ad Studio' },
   'acast':            { businessDays: 5,  label:'Via Acast Marketplace' },
@@ -587,13 +588,31 @@ const CHANNELS = {
     specLink:'https://www.bauermediaoutdoor.no/resources/spesifikasjoner/play-spectacular-programmatic'
   },
   /* ─── DISPLAY ─── */
-  'display': {
-    name:'Programmatisk Display', color:'#FF6B00', cat:'display', sub:'display',
-    hasImage:true, hasVideo:true,
-    specs:{
-      image:{ 'IAB-standardformater':'970×250 · 300×600 · 300×250 · 160×600', 'Øvrige formater':'320×400 · 580×400 · 980×600', 'Filformat':'JPG, PNG eller HTML5', 'Maks filstørrelse':'150 KB (statisk) · 200 KB (animert)' },
-      video:{ 'Format':'MP4 (via 3. part / adserver)', 'Merknad':'Avklar om mp4 leveres via 3. part', 'Fallback':'Avklar: jpg/bilde eller mp4?' }
-    },
+  'display-bilde': {
+    name:'Display – Bilde / HTML5', color:'#FF6B00', cat:'display', sub:'display',
+    hasImage:true, hasVideo:false,
+    specs:{ image:{
+      'IAB-standardformater':'970×250 · 300×600 · 300×250 · 160×600',
+      'Øvrige formater':'320×400 · 580×400 · 980×600',
+      'Filformat':'JPG, PNG eller HTML5',
+      'Maks filstørrelse':'150 KB (statisk) · 200 KB (animert HTML5)',
+      'Animasjon':'Maks 30 sek · maks 3 looper · ingen uendelig loop',
+      'Merknad':'HTML5-bannere leveres som ZIP inkl. index.html',
+    }},
+    postetekst:null, leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
+  },
+  'display-video': {
+    name:'Display – Video (mp4)', color:'#E85000', cat:'display', sub:'display',
+    hasImage:false, hasVideo:true,
+    durations:[6,15,20,30],
+    specs:{ video:{
+      'Format':'MP4 (via 3. part / adserver)',
+      'Anbefalt oppløsning':'1920×1080 px (16:9) eller tilsvarende per format',
+      'Codec':'H.264',
+      'Maks filstørrelse':'Avklar med adserver – typisk 50–150 MB',
+      'Fallback':'Statisk JPG/PNG-banner påkrevd som fallback',
+      'Merknad':'Avklar om mp4 leveres via 3. part eller direkte',
+    }},
     postetekst:null, leveranse:'Avklar adserver og leveringsmetode med Moodgruppen'
   },
   /* ─── AUDIO ─── */
@@ -698,7 +717,7 @@ const TREE = [
   {
     id:'display', label:'Programmatisk display', icon:'🖥️',
     subs:[
-      { id:'display', label:'Display / bannere', channels:['display'] }
+      { id:'display', label:'Display / bannere', channels:['display-bilde','display-video'] }
     ]
   },
   {
@@ -751,7 +770,8 @@ const CHANNEL_KEYWORDS = {
   'bauer-play-adshel': ['play adshel','bauer play adshel'],
   'bauer-play-billboard': ['play billboard','bauer billboard'],
   'bauer-play-spectacular': ['play spectacular','spectacular'],
-  'display': ['display','banner','programmatisk','programmatic','html5'],
+  'display-bilde': ['display bilde','banner bilde','html5','display statisk'],
+  'display-video': ['display video','display film','video banner','display mp4'],
   'spotify-podcast': ['spotify','podcast'],
   'acast': ['acast'],
   'print-dagspresse': ['vg','aftenposten','dagbladet','dagspresse','avis','tabloid'],
@@ -779,7 +799,10 @@ function toggleFormat(id) {
   else {
     const ch = CHANNELS[id];
     const defaultTypes = ch.hasAudio ? ['audio'] : ch.hasVideo ? ['video'] : ['image'];
-    sel[id] = { types: defaultTypes, count:'', ordernr:'', durations:[], customDur:'', notes:'' };
+    const autoDurs = (ch.hasVideo && !ch.hasImage && ch.durations && ch.durations.length > 0)
+      ? [ch.durations[0]]
+      : [];
+    sel[id] = { types: defaultTypes, count:'', ordernr:'', durations: autoDurs, customDur:'', notes:'', adtext:'', headline:'', url:'' };
   }
   renderTree();
   renderConfigAndBtn();
@@ -788,8 +811,21 @@ function toggleFormat(id) {
 function toggleType(id, t) {
   const types = sel[id].types;
   const i = types.indexOf(t);
-  if (i >= 0) { if (types.length === 1) return; sel[id].types = types.filter(x => x !== t); }
-  else sel[id].types = [...types, t];
+  if (i >= 0) {
+    if (types.length === 1) return;
+    sel[id].types = types.filter(x => x !== t);
+    // Fjerner video: nullstill sekundlengder så de ikke henger igjen
+    if (t === 'video') { sel[id].durations = []; sel[id].customDur = ''; }
+  } else {
+    sel[id].types = [...types, t];
+    // Velger video: forhåndsvelg korteste sekundlengde hvis ingen er valgt
+    if (t === 'video') {
+      const opts = CHANNELS[id].durations || [];
+      if (opts.length > 0 && sel[id].durations.length === 0) {
+        sel[id].durations = [opts[0]];
+      }
+    }
+  }
   renderConfigAndBtn();
 }
 
@@ -1063,7 +1099,7 @@ function renderConfigAndBtn() {
               <button class="type-btn${cfg.types.includes('video')?' on':''}" onclick="toggleType('${id}','video')">Film / Video</button>
             </div>
           </div>` : ''}
-        ${durationOptions.length > 0 ? `
+        ${durationOptions.length > 0 && cfg.types.includes('video') ? `
           <div class="duration-section">
             <div class="duration-label">Sekundlengder (velg alle aktuelle)</div>
             <div class="duration-pills">
@@ -1079,9 +1115,29 @@ function renderConfigAndBtn() {
           </div>` : ''}
         <div class="mini-row" style="margin-top:10px">
           ${!ch.hasAudio ? `<div class="mini-field"><label>Antall kreativer</label><input type="text" value="${cfg.count}" placeholder="f.eks. 3" oninput="setCf('${id}','count',this.value)"></div>` : ''}
-          ${ch.isBauer ? `<div class="mini-field"><label>Ordrenummer</label><input type="text" value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordernr',this.value)"></div>` : ''}
-          <div class="mini-field" style="flex:2"><label>Merknad</label><input type="text" value="${cfg.notes}" placeholder="Særlige krav, varianter..." oninput="setCf('${id}','notes',this.value)"></div>
+          ${ch.isBauer ? `<div class="mini-field"><label>Ordrenummer</label><input type="text" value="${cfg.ordernr}" placeholder="Bauer-ordrenr." oninput="setCf('${id}','ordrenr',this.value)"></div>` : ''}
+          <div class="mini-field" style="flex:2"><label>Merknad / særlige krav</label><input type="text" value="${cfg.notes}" placeholder="Varianter, format-krav, tekniske avklaringer..." oninput="setCf('${id}','notes',this.value)"></div>
         </div>
+        ${ch.postetekst !== null || ['meta-bilde','meta-video','meta-karusell','tiktok','snapchat-bilde','snapchat-video','snapchat-collection','youtube'].includes(id) ? `
+        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #f0f0f0">
+          <div style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--mood-secondary);margin-bottom:8px">Annonsekopi (valgfritt)</div>
+          <div class="mini-row">
+            <div class="mini-field" style="flex:3">
+              <label>${id==='tiktok'?'Caption':'Primærtekst / brødtekst'}</label>
+              <input type="text" value="${cfg.adtext||''}" placeholder="${id==='tiktok'?'Annonsecaption (maks 4 linjer)':'Primærtekst til annonsen...'}" oninput="setCf('${id}','adtext',this.value)">
+            </div>
+            ${!['tiktok','youtube'].includes(id) ? `<div class="mini-field" style="flex:2">
+              <label>Overskrift / headline</label>
+              <input type="text" value="${cfg.headline||''}" placeholder="Maks 40 tegn" oninput="setCf('${id}','headline',this.value)">
+            </div>` : ''}
+          </div>
+          <div class="mini-row" style="margin-top:8px">
+            <div class="mini-field" style="flex:1">
+              <label>Landingsside-URL</label>
+              <input type="text" value="${cfg.url||''}" placeholder="https://..." oninput="setCf('${id}','url',this.value)">
+            </div>
+          </div>
+        </div>` : ''}
       </div>
     </div>`;
   }).join('');
@@ -1102,7 +1158,8 @@ function getOpenItems() {
   ids.filter(id => CHANNELS[id].isBauer).forEach(id => {
     if (!sel[id].ordernr) items.push(`${CHANNELS[id].name}: Ordrenummer mangler – påkrevd for direkteleveranse`);
   });
-  if (ids.includes('display')) items.push('Display: Avklar om mp4 leveres via 3. part, og om fallback er jpg eller mp4');
+  if (ids.includes('display-video')) items.push('Display video: Avklar om mp4 leveres via 3. part/adserver, og bekreft fallback til statisk banner');
+  if (ids.includes('display-bilde') || ids.includes('display-video')) items.push('Display: Avklar adserver – DV360, Xandr, PubMatic e.l.');
   if (ids.includes('vgtv')) items.push('VGTV: Bekreft at VAST-tag er satt opp uten VPAID');
   if (ids.includes('azerion')) items.push('Azerion: Velg leveringsmetode – VAST-tag eller videofil + click URL');
   if (ids.some(id => ['meta-bilde','meta-video','meta-karusell','tiktok','snapchat-bilde','snapchat-video','snapchat-collection'].includes(id))) {
