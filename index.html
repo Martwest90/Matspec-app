@@ -140,10 +140,37 @@ input:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,9
 .open-item::before { content: "→"; color: var(--mood-accent1); flex-shrink: 0; }
 .pdf-footer { margin-top: 30px; padding-top: 12px; border-top: 2px dotted var(--mood-decor); display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--mood-secondary); }
 
+/* ── STEG-NAVIGASJON ─── */
+.step-nav { display: flex; align-items: center; gap: 6px; margin: 0 auto; }
+.step-btn { display: flex; align-items: center; gap: 8px; padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 20px; background: white; color: var(--mood-secondary); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; font-family: inherit; }
+.step-btn:hover:not(:disabled) { border-color: var(--mood-accent1); color: var(--mood-accent1); }
+.step-btn.active { background: var(--mood-accent1); border-color: var(--mood-accent1); color: white; }
+.step-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.step-num { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.step-btn.active .step-num { background: rgba(255,255,255,0.25); }
+.step-label { white-space: nowrap; }
+.step-sep { color: var(--mood-decor); font-size: 14px; }
+
+/* ── STEG-PANELER ─── */
+.step-panel { display: none; }
+.step-panel.active { display: block; }
+
+/* ── STEG 2 HEADER ─── */
+.step2-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+.step2-summary { flex: 1; font-size: 12px; color: var(--mood-secondary); }
+.step2-summary strong { color: var(--mood-dark); }
+.back-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: white; color: var(--mood-secondary); font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.12s; font-family: inherit; white-space: nowrap; }
+.back-btn:hover { border-color: var(--mood-accent1); color: var(--mood-accent1); }
+
+/* ── NEXT-KNAPP ─── */
+.next-btn { width: 100%; padding: 14px; background: var(--mood-accent1); color: white; border: none; border-radius: var(--radius-sm); font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.15s; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: inherit; }
+.next-btn:hover { background: #3a41cc; }
+.next-btn:disabled { background: #ccc; cursor: not-allowed; }
+
 @media print {
   body { background: white; }
-  header, .preview-bar, .main > *:not(.preview-wrap) { display: none !important; }
-  .preview-wrap { border: none; margin: 0; }
+  header, .step2-header, .main > *:not(#step3) { display: none !important; }
+  #step3 { display: block !important; }
   .pdf { padding: 20px; }
   .ch-block { break-inside: avoid; }
 }
@@ -153,62 +180,114 @@ input:focus { border-color: var(--mood-accent1); box-shadow: 0 0 0 3px rgba(88,9
 <header>
   <div class="logo-mark">M</div>
   <span class="header-title">Materiellspesifikasjon</span>
+  <nav class="step-nav" id="step-nav">
+    <button class="step-btn active" id="s1-btn" onclick="goStep(1)">
+      <span class="step-num">1</span>
+      <span class="step-label">Kampanje &amp; kanaler</span>
+    </button>
+    <span class="step-sep">›</span>
+    <button class="step-btn" id="s2-btn" onclick="goStep(2)" disabled>
+      <span class="step-num">2</span>
+      <span class="step-label">Konfigurer</span>
+    </button>
+    <span class="step-sep">›</span>
+    <button class="step-btn" id="s3-btn" onclick="goStep(3)" disabled>
+      <span class="step-num">3</span>
+      <span class="step-label">Generer</span>
+    </button>
+  </nav>
   <span class="header-sub">Moodgruppen</span>
 </header>
 <div class="main">
 
-  <!-- Kampanjeinfo -->
-  <div class="card">
-    <div class="section-label">Kampanjeinformasjon</div>
-    <div class="grid-2" style="margin-bottom:12px">
-      <div><label>Klient</label><input type="text" id="f-client" placeholder="f.eks. Fjordland AS" oninput="upd()"></div>
-      <div><label>Kampanjenavn</label><input type="text" id="f-campaign" placeholder="f.eks. Sommerkampanje 2026" oninput="upd()"></div>
-    </div>
-    <div class="grid-4">
-      <div>
-        <label>Kampanjestartdato</label>
-        <input type="date" id="f-start" oninput="upd()">
-        <div style="font-size:10px;color:var(--mood-secondary);margin-top:4px">Brukes til å beregne materiellfrister</div>
+  <!-- STEG 1: Kampanjeinfo + kanalvalg -->
+  <div id="step1" class="step-panel active">
+    <div class="card">
+      <div class="section-label">Kampanjeinformasjon</div>
+      <div class="grid-2" style="margin-bottom:12px">
+        <div><label>Klient</label><input type="text" id="f-client" placeholder="f.eks. Fjordland AS" oninput="upd()"></div>
+        <div><label>Kampanjenavn</label><input type="text" id="f-campaign" placeholder="f.eks. Sommerkampanje 2026" oninput="upd()"></div>
       </div>
-      <div>
-        <label>Kampanjesluttdato</label>
-        <input type="date" id="f-end" oninput="upd()">
+      <div class="grid-4">
+        <div>
+          <label>Kampanjestartdato</label>
+          <input type="date" id="f-start" oninput="upd()">
+          <div style="font-size:10px;color:var(--mood-secondary);margin-top:4px">Brukes til å beregne materiellfrister</div>
+        </div>
+        <div>
+          <label>Kampanjesluttdato</label>
+          <input type="date" id="f-end" oninput="upd()">
+        </div>
+        <div><label>Til produksjonsbyrå</label><input type="text" id="f-agency" placeholder="f.eks. Bacon & Co." oninput="upd()"></div>
+        <div><label>Kontaktperson</label><input type="text" id="f-contact" placeholder="Navn, e-post" oninput="upd()"></div>
       </div>
-      <div><label>Til produksjonsbyrå</label><input type="text" id="f-agency" placeholder="f.eks. Bacon & Co." oninput="upd()"></div>
-      <div><label>Kontaktperson</label><input type="text" id="f-contact" placeholder="Navn, e-post" oninput="upd()"></div>
+      <div id="deadline-summary" style="display:none" class="auto-deadline-info"></div>
     </div>
-    <div id="deadline-summary" style="display:none" class="auto-deadline-info"></div>
-  </div>
 
-  <!-- Medieplanoversikt opplasting -->
-  <div class="card">
-    <div class="section-label">Last opp medieplan (valgfritt)</div>
-    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
-         ondragover="event.preventDefault();this.classList.add('drag-over')"
-         ondragleave="this.classList.remove('drag-over')"
-         ondrop="handleDrop(event)">
-      <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this.files[0])">
-      <div class="upload-icon">📋</div>
-      <div class="upload-title">Dra og slipp medieplan hit, eller klikk for å velge fil</div>
-      <div class="upload-sub">Støtter CSV og Excel · For best resultat: kolonne «Kanal», «Format», «Start» · Kanaler hakes av automatisk</div>
+    <div class="card">
+      <div class="section-label">Last opp medieplan (valgfritt)</div>
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()"
+           ondragover="event.preventDefault();this.classList.add('drag-over')"
+           ondragleave="this.classList.remove('drag-over')"
+           ondrop="handleDrop(event)">
+        <input type="file" id="file-input" accept=".xlsx,.xls,.csv" onchange="handleFileUpload(this.files[0])">
+        <div class="upload-icon">📋</div>
+        <div class="upload-title">Dra og slipp medieplan hit, eller klikk for å velge fil</div>
+        <div class="upload-sub">Støtter CSV og Excel · For best resultat: kolonne «Kanal», «Format», «Start» · Kanaler hakes av automatisk</div>
+      </div>
+      <div class="upload-result" id="upload-result"></div>
     </div>
-    <div class="upload-result" id="upload-result"></div>
+
+    <div class="card">
+      <div class="section-label">Velg kanaler og formater</div>
+      <div id="tree"></div>
+    </div>
+
+    <button class="next-btn" id="next-btn" disabled onclick="goStep(2)">
+      Gå til konfigurering
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 
-  <!-- Kanaltree -->
-  <div class="card">
-    <div class="section-label">Velg kanaler og formater</div>
-    <div id="tree"></div>
+  <!-- STEG 2: Konfigurering -->
+  <div id="step2" class="step-panel">
+    <div class="step2-header">
+      <button class="back-btn" onclick="goStep(1)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Tilbake
+      </button>
+      <div class="step2-summary" id="step2-summary"></div>
+      <button class="next-btn" style="width:auto;padding:10px 22px" onclick="goStep(3)">
+        Generer
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="card">
+      <div class="section-label">Konfigurer valgte formater</div>
+      <div id="config-list"></div>
+    </div>
+    <button class="gen-btn" id="gen-btn" onclick="goStep(3)">
+      Generer materiellspesifikasjon
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left:6px"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
   </div>
 
-  <!-- Config -->
-  <div class="card" id="config-card" style="display:none">
-    <div class="section-label">Konfigurer valgte formater</div>
-    <div id="config-list"></div>
+  <!-- STEG 3: Preview -->
+  <div id="step3" class="step-panel">
+    <div class="step2-header">
+      <button class="back-btn" onclick="goStep(2)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Tilbake til konfig
+      </button>
+      <div class="step2-summary" id="step3-summary"></div>
+      <button class="print-btn" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Skriv ut / Lagre PDF
+      </button>
+    </div>
+    <div id="preview-area"></div>
   </div>
 
-  <button class="gen-btn" id="gen-btn" disabled onclick="generate()">Generer materiellspesifikasjon</button>
-  <div id="preview-area"></div>
 </div>
 
 <script>
@@ -785,6 +864,48 @@ let sel = {};
 let openCats = {};
 let openSubs = {};
 
+// ─── STEG-NAVIGASJON ─────────────────────────────────────────────────────────
+let currentStep = 1;
+
+function goStep(n) {
+  // Steg 3: bygg preview før vi viser panelet
+  if (n === 3) buildAndShowPreview();
+
+  currentStep = n;
+  [1,2,3].forEach(i => {
+    document.getElementById('step'+i).classList.toggle('active', i === n);
+    const btn = document.getElementById('s'+i+'-btn');
+    if (btn) btn.classList.toggle('active', i === n);
+  });
+
+  // Oppdater steg2-summary
+  if (n === 2) {
+    const ids = Object.keys(sel);
+    const names = ids.map(id => CHANNELS[id].name).join(' · ');
+    const client = document.getElementById('f-client').value;
+    document.getElementById('step2-summary').innerHTML =
+      `<strong>${ids.length} kanal${ids.length!==1?'er':''} valgt</strong>${names?' · <span>'+names+'</span>':''}${client?' · '+client:''}`;
+  }
+  if (n === 3) {
+    const client = document.getElementById('f-client').value;
+    const campaign = document.getElementById('f-campaign').value;
+    document.getElementById('step3-summary').innerHTML =
+      `<strong>${client||'–'}</strong>${campaign?' · '+campaign:''}`;
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildAndShowPreview() {
+  document.getElementById('preview-area').innerHTML = `
+    <div class="preview-wrap" style="border:none;margin:0">
+      <div style="padding:0 0 16px 0;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:12px;color:var(--mood-secondary);font-weight:500">Forhåndsvisning – klar til utskrift</span>
+      </div>
+      ${buildPDF()}
+    </div>`;
+}
+
 function upd() {
   updateDeadlineSummary();
   renderConfigAndBtn();
@@ -1068,11 +1189,20 @@ function renderTree() {
 // ─── RENDER CONFIG ────────────────────────────────────────────────────────────
 function renderConfigAndBtn() {
   const ids = Object.keys(sel);
-  const card = document.getElementById('config-card');
-  const btn = document.getElementById('gen-btn');
   updateDeadlineSummary();
-  if (ids.length === 0) { card.style.display = 'none'; btn.disabled = true; return; }
-  card.style.display = 'block'; btn.disabled = false;
+  const hasChannels = ids.length > 0;
+
+  // Styr next-btn på steg 1
+  const nextBtn = document.getElementById('next-btn');
+  if (nextBtn) nextBtn.disabled = !hasChannels;
+
+  // Styr steg 2 og 3 i navigator
+  const s2btn = document.getElementById('s2-btn');
+  const s3btn = document.getElementById('s3-btn');
+  if (s2btn) s2btn.disabled = !hasChannels;
+  if (s3btn) s3btn.disabled = !hasChannels;
+
+  if (!hasChannels) return;
 
   document.getElementById('config-list').innerHTML = ids.map(id => {
     const ch = CHANNELS[id];
@@ -1285,21 +1415,8 @@ function buildPDF() {
     </div>`;
 }
 
-function generate() {
-  const area = document.getElementById('preview-area');
-  area.innerHTML = `
-    <div class="preview-wrap">
-      <div class="preview-bar">
-        <span class="preview-label">Forhåndsvisning – klar til utskrift / PDF</span>
-        <button class="print-btn" onclick="window.print()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-          Skriv ut / Lagre PDF
-        </button>
-      </div>
-      ${buildPDF()}
-    </div>`;
-  area.scrollIntoView({ behavior:'smooth', block:'start' });
-}
+// generate() er erstattet av goStep(3) + buildAndShowPreview()
+function generate() { goStep(3); }
 
 renderTree();
 </script>
